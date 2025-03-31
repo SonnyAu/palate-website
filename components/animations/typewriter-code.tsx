@@ -1,8 +1,7 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
-import { motion, useInView } from "framer-motion"
-import { useReducedMotion } from "framer-motion"
+import { useEffect, useRef, useState } from "react"
+import { motion, useInView, useReducedMotion } from "framer-motion"
 
 interface TypewriterCodeProps {
   code: string
@@ -27,38 +26,49 @@ export function TypewriterCode({
   const prefersReducedMotion = useReducedMotion()
 
   // Calculate the maximum line length for width determination
-  const maxLineLength = code.split("\n").reduce((max, line) => Math.max(max, line.length), 0)
+  const maxLineLength = code
+    .split("\n")
+    .reduce((max, line) => Math.max(max, line.length), 0)
 
   // Format code with syntax highlighting
   const formatCode = (text: string) => {
     // First, escape HTML entities
-    let highlighted = text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+    let highlighted = text
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
 
     // Highlight the URL
     highlighted = highlighted.replace(
       /(fetch\()("https:\/\/api\.example\.com\/v1\/restaurants")/,
-      '$1<span style="color: #ecc94b">$2</span>',
+      '$1<span style="color: #ecc94b">$2</span>'
     )
 
     // Highlight the method
-    highlighted = highlighted.replace(/("GET")/, '<span style="color: #f56565">$1</span>')
+    highlighted = highlighted.replace(
+      /("GET")/,
+      '<span style="color: #f56565">$1</span>'
+    )
 
     // Highlight the header keys and values
     highlighted = highlighted.replace(
       /("Authorization")(:)(\s*)("Bearer YOUR_API_KEY")/,
-      '<span style="color: #ecc94b">$1</span>$2$3<span style="color: #ecc94b">$4</span>',
+      '<span style="color: #ecc94b">$1</span>$2$3<span style="color: #ecc94b">$4</span>'
     )
 
     highlighted = highlighted.replace(
       /("Content-Type")(:)(\s*)("application\/json")/,
-      '<span style="color: #ecc94b">$1</span>$2$3<span style="color: #ecc94b">$4</span>',
+      '<span style="color: #ecc94b">$1</span>$2$3<span style="color: #ecc94b">$4</span>'
     )
 
     // Highlight method and keywords
-    highlighted = highlighted.replace(/\b(method|headers)\b/g, '<span style="color: #63b3ed">$1</span>')
+    highlighted = highlighted.replace(
+      /\b(method|headers)\b/g,
+      '<span style="color: #63b3ed">$1</span>'
+    )
     highlighted = highlighted.replace(
       /\b(fetch|then|response|json|data|console|log)\b/g,
-      '<span style="color: #63b3ed">$1</span>',
+      '<span style="color: #63b3ed">$1</span>'
     )
 
     return highlighted
@@ -91,12 +101,19 @@ export function TypewriterCode({
     } else if (currentIndex >= code.length) {
       setIsTyping(false)
     }
-  }, [code, currentIndex, isTyping, typingSpeed, isInView, prefersReducedMotion])
+  }, [
+    code,
+    currentIndex,
+    isTyping,
+    typingSpeed,
+    isInView,
+    prefersReducedMotion,
+  ])
 
   // Generate line numbers if needed
   const lineNumbers = showLineNumbers
     ? code.split("\n").map((_, i) => (
-        <div key={i} className="select-none text-gray-500 text-right pr-4 w-8">
+        <div key={i} className="w-8 select-none pr-4 text-right text-gray-500">
           {i + 1}
         </div>
       ))
@@ -109,19 +126,27 @@ export function TypewriterCode({
   return (
     <div
       ref={containerRef}
-      className={`font-mono text-sm rounded-lg bg-[#27292A] p-6 shadow-2xl hover:shadow-2xl/80 transition-shadow duration-300 ${className}`}
+      className={`hover:shadow-2xl/80 rounded-lg bg-[#27292A] p-6 font-mono text-sm shadow-2xl transition-shadow duration-300 ${className}`}
       style={{ width: "fit-content", maxWidth: "100%" }}
     >
       <div className="flex">
-        {showLineNumbers && <div className="flex flex-col flex-shrink-0">{lineNumbers}</div>}
+        {showLineNumbers && (
+          <div className="flex shrink-0 flex-col">{lineNumbers}</div>
+        )}
         <div className="overflow-x-auto" style={{ width: `${codeWidth}ch` }}>
-          <pre className="text-white whitespace-pre" style={{ width: "100%" }}>
-            <code dangerouslySetInnerHTML={{ __html: formatCode(displayedCode) }} />
+          <pre className="whitespace-pre text-white" style={{ width: "100%" }}>
+            <code
+              dangerouslySetInnerHTML={{ __html: formatCode(displayedCode) }}
+            />
             {isTyping && isInView && !prefersReducedMotion && (
               <motion.span
-                className="inline-block w-2 h-4 bg-white ml-0.5"
+                className="ml-0.5 inline-block h-4 w-2 bg-white"
                 animate={{ opacity: [1, 0] }}
-                transition={{ duration: 0.8, repeat: Number.POSITIVE_INFINITY, repeatType: "reverse" }}
+                transition={{
+                  duration: 0.8,
+                  repeat: Number.POSITIVE_INFINITY,
+                  repeatType: "reverse",
+                }}
               />
             )}
           </pre>
@@ -130,4 +155,3 @@ export function TypewriterCode({
     </div>
   )
 }
-

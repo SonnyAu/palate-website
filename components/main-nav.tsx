@@ -1,5 +1,6 @@
 "use client"
 
+import type React from "react"
 import { useEffect, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
@@ -71,7 +72,10 @@ export function MainNav() {
   }
 
   // Navigation handler that works on both home and contact pages
-  const handleNavClick = (e, sectionId) => {
+  const handleNavClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    sectionId: string
+  ) => {
     e.preventDefault()
 
     // Close mobile menu if open
@@ -123,13 +127,13 @@ export function MainNav() {
         {/* Flexbox layout for better spacing control */}
         <div className="flex h-20 items-center justify-between">
           {/* Logo - Left section with fixed width */}
-          <div className="min-w-[150px] flex-shrink-0 pr-4 md:pr-6 lg:min-w-[180px] lg:pr-8">
+          <div className="min-w-[150px] shrink-0 pr-4 md:pr-6 lg:min-w-[180px] lg:pr-8">
             <Link
               href="/"
               className="flex items-center rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-[#288132]"
               aria-label="PalAte Home"
             >
-              <div className="relative flex-shrink-0">
+              <div className="relative shrink-0">
                 <Image
                   src="/logo.png"
                   alt="PalAte Logo"
@@ -145,7 +149,7 @@ export function MainNav() {
 
           {/* Nav Links - Center section with flex-grow */}
           <nav
-            className="hidden flex-grow items-center justify-center px-4 lg:flex"
+            className="hidden grow items-center justify-center px-4 lg:flex"
             aria-label="Main navigation"
           >
             <ul
@@ -153,7 +157,7 @@ export function MainNav() {
               role="menubar"
             >
               {navLinks.map((link) => (
-                <li key={link.id} className="flex-shrink-0" role="none">
+                <li key={link.id} className="shrink-0" role="none">
                   <a
                     href={link.href}
                     onClick={(e) => handleNavClick(e, link.id)}
@@ -170,7 +174,7 @@ export function MainNav() {
                     {link.label}
                     {activeSection === link.id && isHomePage && (
                       <span
-                        className="absolute -bottom-1 left-1/2 h-2 w-2 -translate-x-1/2 transform rounded-full bg-[#288132]"
+                        className="absolute -bottom-1 left-1/2 size-2 -translate-x-1/2 rounded-full bg-[#288132]"
                         aria-hidden="true"
                       />
                     )}
@@ -181,7 +185,7 @@ export function MainNav() {
           </nav>
 
           {/* Action Buttons or Hamburger - Right section with fixed width */}
-          <div className="flex flex-shrink-0 items-center justify-end pl-4 md:pl-6 lg:pl-8">
+          <div className="flex shrink-0 items-center justify-end pl-4 md:pl-6 lg:pl-8">
             {/* Mobile/tablet hamburger button - show on medium screens and below */}
             <div className="lg:hidden">
               <Button
@@ -194,27 +198,27 @@ export function MainNav() {
                 className="relative z-50 rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-[#288132]"
               >
                 {isMenuOpen ? (
-                  <X className="h-6 w-6" aria-hidden="true" />
+                  <X className="size-6" aria-hidden="true" />
                 ) : (
-                  <Menu className="h-6 w-6" aria-hidden="true" />
+                  <Menu className="size-6" aria-hidden="true" />
                 )}
               </Button>
             </div>
 
             {/* Desktop buttons - only show on large screens */}
-            <div className="hidden items-center space-x-4 lg:flex">
-              <button
-                className="inline-flex h-[60px] cursor-default flex-col items-center justify-center whitespace-nowrap rounded-md bg-[#288132] px-4 py-3 text-sm font-medium text-white shadow-sm transition-colors hover:bg-[#288132]/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#288132] focus-visible:ring-offset-2 xl:px-5 xl:text-base"
-                aria-label="PalAte app coming soon"
+            <div className="hidden items-center space-x-3 lg:flex">
+              <a
+                href="https://appstore.example.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center whitespace-nowrap rounded-md bg-[#288132] px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-[#288132]/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#288132] focus-visible:ring-offset-2 xl:px-5 xl:text-base"
+                aria-label="Download the PalAte app"
               >
-                <span>Coming Soon</span>
-                <span className="mt-1 text-xs text-white/80">
-                  Available soon on iOS
-                </span>
-              </button>
+                Download App
+              </a>
               <Link
                 href="/contact"
-                className="inline-flex h-[60px] items-center justify-center whitespace-nowrap rounded-md border border-[#288132] bg-transparent px-4 py-3 text-sm font-medium text-[#288132] shadow-sm transition-colors hover:bg-[#288132]/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#288132] focus-visible:ring-offset-2 xl:px-5 xl:text-base"
+                className="inline-flex items-center justify-center whitespace-nowrap rounded-md border border-[#288132] bg-transparent px-4 py-2 text-sm font-medium text-[#288132] shadow-sm transition-colors hover:bg-[#288132]/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#288132] focus-visible:ring-offset-2 xl:px-5 xl:text-base"
                 aria-label="Contact PalAte support"
               >
                 Contact Us
@@ -260,7 +264,7 @@ export function MainNav() {
                     {link.label}
                     {activeSection === link.id && isHomePage && (
                       <span
-                        className="ml-2 inline-block h-2 w-2 rounded-full bg-[#288132]"
+                        className="ml-2 inline-block size-2 rounded-full bg-[#288132]"
                         aria-hidden="true"
                       />
                     )}
@@ -268,19 +272,19 @@ export function MainNav() {
                 ))}
               </nav>
 
-              <div className="mt-auto space-y-4 pt-4">
-                <button
-                  className="flex h-[64px] w-full cursor-default flex-col items-center justify-center rounded-md bg-[#288132] px-4 py-3 text-base font-medium text-white shadow-sm transition-colors hover:bg-[#288132]/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#288132] focus-visible:ring-offset-2"
-                  aria-label="PalAte app coming soon"
+              <div className="mt-auto space-y-3 pt-4">
+                <a
+                  href="https://appstore.example.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex w-full items-center justify-center rounded-md bg-[#288132] px-4 py-2.5 text-base font-medium text-white shadow-sm transition-colors hover:bg-[#288132]/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#288132] focus-visible:ring-offset-2"
+                  aria-label="Download the PalAte app"
                 >
-                  <span>Coming Soon</span>
-                  <span className="mt-1 text-xs text-white/80">
-                    Available soon on iOS
-                  </span>
-                </button>
+                  Download App
+                </a>
                 <Link
                   href="/contact"
-                  className="flex h-[64px] w-full items-center justify-center rounded-md border border-[#288132] bg-transparent px-4 py-3 text-base font-medium text-[#288132] shadow-sm transition-colors hover:bg-[#288132]/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#288132] focus-visible:ring-offset-2"
+                  className="flex w-full items-center justify-center rounded-md border border-[#288132] bg-transparent px-4 py-2.5 text-base font-medium text-[#288132] shadow-sm transition-colors hover:bg-[#288132]/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#288132] focus-visible:ring-offset-2"
                   aria-label="Contact PalAte support"
                 >
                   Contact Us

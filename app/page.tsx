@@ -1,5 +1,6 @@
 "use client"
 
+import type React from "react"
 import Image from "next/image"
 import Link from "next/link"
 import {
@@ -22,7 +23,10 @@ import { MainNav } from "@/components/main-nav"
 import { Input } from "@/components/ui/input"
 
 export default function Home() {
-  const handleNavClick = (e: any, id: string) => {
+  const handleNavClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    id: string
+  ) => {
     e.preventDefault()
     const element = document.getElementById(id)
     if (element) {
@@ -94,7 +98,7 @@ headers: {
                     >
                       <span className="flex items-center justify-center gap-3 text-xl font-bold sm:text-2xl">
                         App Launching Soon
-                        <ArrowRight className="h-6 w-6" />
+                        <ArrowRight className="size-6" />
                       </span>
                     </MotionButton>
                     <span className="mt-2 text-sm text-[#27292A]">
@@ -163,8 +167,8 @@ headers: {
                 className="flex h-full flex-col justify-between rounded-lg border border-[#FFE1A8] bg-[#FFE1A8]/70 p-6 shadow-lg transition-shadow duration-300 hover:shadow-xl"
               >
                 <div>
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#288132] text-white">
-                    <Leaf className="h-6 w-6" />
+                  <div className="flex size-12 items-center justify-center rounded-full bg-[#288132] text-white">
+                    <Leaf className="size-6" />
                   </div>
                   <div className="mt-4 space-y-2">
                     <h3 className="text-xl font-bold text-[#3f301d]">
@@ -182,8 +186,8 @@ headers: {
                 className="flex h-full flex-col justify-between rounded-lg border border-[#FFE1A8] bg-[#FFE1A8]/70 p-6 shadow-lg transition-shadow duration-300 hover:shadow-xl"
               >
                 <div>
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#288132] text-white">
-                    <Utensils className="h-6 w-6" />
+                  <div className="flex size-12 items-center justify-center rounded-full bg-[#288132] text-white">
+                    <Utensils className="size-6" />
                   </div>
                   <div className="mt-4 space-y-2">
                     <h3 className="text-xl font-bold text-[#3f301d]">
@@ -201,8 +205,8 @@ headers: {
                 className="flex h-full flex-col justify-between rounded-lg border border-[#FFE1A8] bg-[#FFE1A8]/70 p-6 shadow-lg transition-shadow duration-300 hover:shadow-xl"
               >
                 <div>
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#288132] text-white">
-                    <Apple className="h-6 w-6" />
+                  <div className="flex size-12 items-center justify-center rounded-full bg-[#288132] text-white">
+                    <Apple className="size-6" />
                   </div>
                   <div className="mt-4 space-y-2">
                     <h3 className="text-xl font-bold text-[#3f301d]">
@@ -256,14 +260,14 @@ headers: {
                     delay={0.1}
                   >
                     Create a party, share your dietary needs, and get
-                    group-friendly restaurant suggestions that match everyone's
-                    preferences.
+                    group-friendly restaurant suggestions that match
+                    everyone&apos;s preferences.
                   </MotionParagraph>
 
                   <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
                     <div className="rounded-lg bg-white p-4 shadow-md transition-shadow duration-300 hover:shadow-lg">
                       <div className="mb-2 flex items-center gap-2">
-                        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#288132] text-white">
+                        <div className="flex size-8 items-center justify-center rounded-full bg-[#288132] text-white">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="18"
@@ -293,7 +297,7 @@ headers: {
 
                     <div className="rounded-lg bg-white p-4 shadow-md transition-shadow duration-300 hover:shadow-lg">
                       <div className="mb-2 flex items-center gap-2">
-                        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#288132] text-white">
+                        <div className="flex size-8 items-center justify-center rounded-full bg-[#288132] text-white">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="18"
@@ -314,8 +318,8 @@ headers: {
                         </h3>
                       </div>
                       <p className="text-sm text-[#27292A]">
-                        Our app automatically combines everyone's dietary needs
-                        into one search.
+                        Our app automatically combines everyone&apos;s dietary
+                        needs into one search.
                       </p>
                     </div>
                   </div>
@@ -326,7 +330,7 @@ headers: {
                 delay={0.3}
                 className="flex items-center justify-center"
               >
-                <div className="relative aspect-[9/19.5] w-[280px] rounded-[2rem] border-[8px] border-[#27292A] bg-[#27292A] shadow-lg md:w-[320px]">
+                <div className="relative aspect-[9/19.5] w-[280px] rounded-[2rem] border-8 border-[#27292A] bg-[#27292A] shadow-lg md:w-[320px]">
                   <div className="absolute inset-0 flex items-center justify-center overflow-hidden rounded-[1.75rem] bg-gray-100">
                     {/* Placeholder for app preview image */}
                     <div className="p-4 text-center">
@@ -454,7 +458,7 @@ headers: {
                           "Carnivore Diet",
                         ].map((pref) => (
                           <li key={pref} className="flex items-center gap-2">
-                            <Check className="h-5 w-5 text-[#288132]" />
+                            <Check className="size-5 text-[#288132]" />
                             <span className="text-[#27292A]">{pref}</span>
                           </li>
                         ))}
@@ -474,7 +478,7 @@ headers: {
                           "Calorie Preferences",
                         ].map((pref) => (
                           <li key={pref} className="flex items-center gap-2">
-                            <Check className="h-5 w-5 text-[#288132]" />
+                            <Check className="size-5 text-[#288132]" />
                             <span className="text-[#27292A]">{pref}</span>
                           </li>
                         ))}
@@ -492,7 +496,7 @@ headers: {
                       {/* Phone mockup with perfectly matched corners */}
                       <div className="relative w-[280px]">
                         {/* Phone frame with border */}
-                        <div className="relative aspect-[9/19.5] w-full rounded-[2rem] border-[8px] border-[#27292A] bg-[#27292A] shadow-lg">
+                        <div className="relative aspect-[9/19.5] w-full rounded-[2rem] border-8 border-[#27292A] bg-[#27292A] shadow-lg">
                           {/* Inner screen container with precise corner radius to match iPhone-like corners */}
                           <div className="absolute inset-0 overflow-hidden rounded-[1.75rem] bg-white">
                             {/* The app screenshot image positioned to fill the container */}
@@ -579,7 +583,7 @@ headers: {
                     accommodate them.
                   </MotionParagraph>
                   <MotionParagraph className="text-[#27292A]" delay={0.3}>
-                    We're committed to making food discovery accessible,
+                    We&apos;re committed to making food discovery accessible,
                     accurate, and enjoyable for all dietary preferences.
                   </MotionParagraph>
                 </div>
@@ -651,19 +655,19 @@ headers: {
                   </MotionParagraph>
                   <ul className="space-y-2 text-[#27292A]">
                     <li className="flex items-center gap-2">
-                      <Database className="h-5 w-5 text-[#288132]" />
+                      <Database className="size-5 text-[#288132]" />
                       <span>
                         Access our database of diet-friendly restaurants
                       </span>
                     </li>
                     <li className="flex items-center gap-2">
-                      <Utensils className="h-5 w-5 text-[#288132]" />
+                      <Utensils className="size-5 text-[#288132]" />
                       <span>
                         Get detailed menu information with dietary flags
                       </span>
                     </li>
                     <li className="flex items-center gap-2">
-                      <Lock className="h-5 w-5 text-[#288132]" />
+                      <Lock className="size-5 text-[#288132]" />
                       <span>Secure, reliable, and scalable infrastructure</span>
                     </li>
                   </ul>
@@ -745,7 +749,7 @@ headers: {
                 <div className="inline-flex h-12 cursor-default items-center justify-center rounded-md bg-black px-10 text-base font-medium text-white shadow transition-colors hover:bg-black/90">
                   <svg
                     viewBox="0 0 24 24"
-                    className="mr-2 h-6 w-6"
+                    className="mr-2 size-6"
                     fill="currentColor"
                   >
                     <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.21 2.33-.91 3.57-.84 1.5.12 2.63.64 3.4 1.8-3.03 1.81-2.52 5.68.22 7.14-.62 1.64-1.42 3.27-2.27 4.07ZM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.26 2.01-1.76 4.04-3.74 4.25Z" />
