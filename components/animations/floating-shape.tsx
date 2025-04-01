@@ -24,9 +24,9 @@ export function FloatingShape({
   const floatAnimation = prefersReducedMotion
     ? {}
     : {
-        y: [0, -15, 0],
-        x: [0, 10, 0],
-        rotate: [0, 5, 0],
+        y: [0, -10, 0], // Reduced from [0, -15, 0]
+        x: [0, 5, 0], // Reduced from [0, 10, 0]
+        rotate: [0, 3, 0], // Reduced from [0, 5, 0]
       }
 
   const getShape = () => {
@@ -34,21 +34,21 @@ export function FloatingShape({
       case "circle":
         return (
           <motion.div
-            className={`rounded-full opacity-10 ${className}`}
+            className={`rounded-full opacity-5 ${className}`} // Changed from opacity-10
             style={{ width: size, height: size, backgroundColor: color }}
           />
         )
       case "square":
         return (
           <motion.div
-            className={`rounded-lg opacity-10 ${className}`}
+            className={`rounded-lg opacity-5 ${className}`} // Changed from opacity-10
             style={{ width: size, height: size, backgroundColor: color }}
           />
         )
       case "triangle":
         return (
           <motion.div
-            className={`opacity-10 ${className}`}
+            className={`opacity-5 ${className}`} // Changed from opacity-10
             style={{
               width: 0,
               height: 0,
@@ -63,7 +63,7 @@ export function FloatingShape({
         return (
           <motion.svg
             viewBox="0 0 200 200"
-            className={`opacity-10 ${className}`}
+            className={`opacity-5 ${className}`} // Changed from opacity-10
             style={{ width: size, height: size }}
           >
             <path

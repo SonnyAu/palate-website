@@ -1,7 +1,6 @@
 "use client"
 
-import { motion } from "framer-motion"
-import { useReducedMotion } from "framer-motion"
+import { motion, useReducedMotion } from "framer-motion"
 
 interface WavyGradientBackgroundProps {
   className?: string
@@ -15,16 +14,22 @@ export function WavyGradientBackground({
   const prefersReducedMotion = useReducedMotion()
 
   // Slightly darker and lighter shades of the base color for the gradient
-  const lighterShade = "#FFF2D0" // Lighter shade of warm pastel gold
-  const darkerShade = "#FFE1A8" // Light honey shade for contrast
+  const lighterShade = "#FFF6E0" // Lighter shade of warm pastel gold
+  const darkerShade = "#FFD890" // Light honey shade for contrast
 
   return (
-    <div className={`absolute inset-0 -z-10 overflow-hidden ${className}`}>
-      <div className="absolute inset-0" style={{ backgroundColor: baseColor }} />
+    <div
+      className={`absolute inset-0 bottom-0 left-0 right-0 top-0 -z-10 h-full w-full overflow-hidden ${className}`}
+      style={{ margin: 0, padding: 0, boxSizing: "border-box" }}
+    >
+      <div
+        className="absolute inset-0"
+        style={{ backgroundColor: baseColor }}
+      />
 
       {/* Wavy gradient overlay */}
       <motion.div
-        className="absolute inset-0"
+        className="absolute inset-0 h-full w-full"
         style={{
           backgroundImage: `
         linear-gradient(
@@ -36,10 +41,11 @@ export function WavyGradientBackground({
           ${lighterShade} 100%
         )
       `,
-          maskImage: `url("data:image/svg+xml,%3Csvg width='1200' height='600' viewBox='0 0 1200 600' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M 0 300 Q 150 150 300 300 Q 450 450 600 300 Q 750 150 900 300 Q 1050 450 1200 300 L 1200 600 L 0 600 Z' fill='black'/%3E%3C/svg%3E")`,
-          maskSize: "100% 100%",
-          maskRepeat: "no-repeat",
-          opacity: 0.4,
+          maskImage: `url("data:image/svg+xml,%3Csvg width='1200' height='600' viewBox='0 0 1200 600' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M 0 350 Q 150 250 300 350 Q 450 450 600 350 Q 750 250 900 350 Q 1050 450 1200 350 L 1200 600 L 0 600 Z' fill='black'/%3E%3C/svg%3E")`,
+          maskSize: "130% 130%",
+          maskRepeat: "repeat",
+          maskPosition: "center",
+          opacity: 0.4, // Reduced from 0.6
         }}
         initial={{ opacity: 0.3 }}
         animate={
@@ -68,7 +74,7 @@ export function WavyGradientBackground({
 
       {/* Second wavy layer with different wave pattern */}
       <motion.div
-        className="absolute inset-0"
+        className="absolute inset-0 h-full w-full"
         style={{
           backgroundImage: `
         linear-gradient(
@@ -80,10 +86,11 @@ export function WavyGradientBackground({
           ${lighterShade} 100%
         )
       `,
-          maskImage: `url("data:image/svg+xml,%3Csvg width='1200' height='600' viewBox='0 0 1200 600' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M 0 150 Q 150 300 300 150 Q 450 0 600 150 Q 750 300 900 150 Q 1050 0 1200 150 L 1200 0 L 0 0 Z' fill='black'/%3E%3C/svg%3E")`,
-          maskSize: "120% 120%",
-          maskRepeat: "no-repeat",
-          opacity: 0.3,
+          maskImage: `url("data:image/svg+xml,%3Csvg width='1200' height='600' viewBox='0 0 1200 600' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M 0 200 Q 150 300 300 200 Q 450 100 600 200 Q 750 300 900 200 Q 1050 100 1200 200 L 1200 0 L 0 0 Z' fill='black'/%3E%3C/svg%3E")`,
+          maskSize: "150% 150%",
+          maskRepeat: "repeat",
+          maskPosition: "center",
+          opacity: 0.3, // Reduced from 0.5
         }}
         initial={{ opacity: 0.2 }}
         animate={
@@ -112,4 +119,3 @@ export function WavyGradientBackground({
     </div>
   )
 }
-

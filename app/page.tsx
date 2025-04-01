@@ -223,12 +223,133 @@ headers: {
             </div>
           </div>
         </section>
+
+        <section
+          id="diets"
+          className="relative w-full overflow-hidden py-12 md:py-24 lg:py-32"
+        >
+          <WavyGradientBackground baseColor="#FFEBB5" />
+          <FloatingShape
+            type="triangle"
+            size={180}
+            color="#288132"
+            className="right-[15%] top-60 opacity-5"
+            delay={0.7}
+            duration={18}
+          />
+          <FloatingShape
+            type="circle"
+            size={120}
+            color="#3f301d"
+            className="bottom-40 left-[20%] opacity-5"
+            delay={1.2}
+            duration={23}
+          />
+          <div className="container relative px-4 md:px-6">
+            <div className="grid items-center gap-6 lg:grid-cols-2 lg:gap-12">
+              <MotionSection
+                delay={0.3}
+                className="flex items-center justify-center"
+              >
+                <div className="relative h-[600px] w-[300px] overflow-hidden rounded-[2.5rem] border-8 border-[#27292A] shadow-2xl">
+                  <div className="absolute inset-0 flex items-center justify-center overflow-hidden rounded-[2.1rem] bg-white">
+                    <Image
+                      src="/preferences-screen.png"
+                      alt="PalAte Dietary Preferences Screen"
+                      fill
+                      className="object-cover"
+                      style={{
+                        objectPosition: "top center",
+                      }}
+                      sizes="300px"
+                      priority
+                    />
+                  </div>
+                </div>
+              </MotionSection>
+
+              <MotionSection>
+                <div className="space-y-4">
+                  <div className="mb-2 inline-block rounded-lg bg-[#288132] px-3 py-1 text-sm text-white">
+                    Dietary Preferences
+                  </div>
+                  <MotionHeading className="text-3xl font-bold tracking-tighter text-[#3f301d] sm:text-4xl md:text-5xl">
+                    Tailored to Your Diet
+                  </MotionHeading>
+                  <MotionParagraph
+                    className="text-[#27292A] md:text-xl"
+                    delay={0.1}
+                  >
+                    Choose your dietary preferences and we&apos;ll find
+                    restaurants that match your specific needs, whether
+                    you&apos;re vegan, gluten-free, or have religious dietary
+                    requirements.
+                  </MotionParagraph>
+
+                  <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
+                    <div className="rounded-lg bg-white p-4 shadow-md transition-shadow duration-300 hover:shadow-lg">
+                      <div className="mb-2 flex items-center gap-2">
+                        <div className="flex size-8 items-center justify-center rounded-full bg-[#288132] text-white">
+                          <Leaf className="size-4" />
+                        </div>
+                        <h3 className="font-semibold text-[#3f301d]">
+                          Dietary Restrictions
+                        </h3>
+                      </div>
+                      <p className="text-sm text-[#27292A]">
+                        From allergies to lifestyle choices, we account for all
+                        your dietary needs.
+                      </p>
+                    </div>
+
+                    <div className="rounded-lg bg-white p-4 shadow-md transition-shadow duration-300 hover:shadow-lg">
+                      <div className="mb-2 flex items-center gap-2">
+                        <div className="flex size-8 items-center justify-center rounded-full bg-[#288132] text-white">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="18"
+                            height="18"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
+                          </svg>
+                        </div>
+                        <h3 className="font-semibold text-[#3f301d]">
+                          Religious Diets
+                        </h3>
+                      </div>
+                      <p className="text-sm text-[#27292A]">
+                        We respect all religious dietary practices including
+                        Halal, Kosher, and more.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="mt-6">
+                    <Link
+                      href="/scoring"
+                      className="inline-flex items-center font-medium text-[#288132] hover:text-[#288132]/80"
+                    >
+                      Learn more about how we generate restaurant scores
+                      <ExternalLink className="ml-2 size-4" />
+                    </Link>
+                  </div>
+                </div>
+              </MotionSection>
+            </div>
+          </div>
+        </section>
+
         <section
           id="party"
           className="relative w-full overflow-hidden py-12 md:py-24 lg:py-32"
         >
-          <WavyGradientBackground baseColor="#FFEBB5" />{" "}
-          {/* Using the same warm pastel gold as other sections for consistency */}
+          <WavyGradientBackground baseColor="#FFD8B5" />
           <FloatingShape
             type="circle"
             size={200}
@@ -330,138 +451,16 @@ headers: {
                 delay={0.3}
                 className="flex items-center justify-center"
               >
-                <div className="relative aspect-[9/18] w-[300px] rounded-[2rem] border-8 border-[#27292A] bg-[#27292A] shadow-lg md:w-[340px]">
-                  <div className="absolute inset-0 flex items-center justify-center overflow-hidden rounded-[1.75rem] bg-gray-100">
+                <div className="relative h-[600px] w-[300px] overflow-hidden rounded-[2.5rem] border-8 border-[#27292A] shadow-2xl">
+                  <div className="absolute inset-0 flex items-center justify-center overflow-hidden rounded-[2.1rem] bg-gray-100">
                     <Image
                       src="/party.jpg"
                       alt="PalAte Party System"
                       fill
                       className="object-contain"
-                      sizes="(max-width: 768px) 300px, 340px"
+                      sizes="300px"
                       priority
                     />
-                  </div>
-                </div>
-              </MotionSection>
-            </div>
-          </div>
-        </section>
-
-        <section
-          id="diets"
-          className="relative w-full overflow-hidden py-12 md:py-24 lg:py-32"
-        >
-          <WavyGradientBackground baseColor="#FFEBB5" />{" "}
-          {/* Using the same warm pastel gold for consistency */}
-          <FloatingShape
-            type="triangle"
-            size={180}
-            color="#288132"
-            className="right-[15%] top-60 opacity-5"
-            delay={0.7}
-            duration={18}
-          />
-          <FloatingShape
-            type="circle"
-            size={120}
-            color="#3f301d"
-            className="bottom-40 left-[20%] opacity-5"
-            delay={1.2}
-            duration={23}
-          />
-          <div className="container relative px-4 md:px-6">
-            <div className="grid items-center gap-6 lg:grid-cols-2 lg:gap-12">
-              <MotionSection
-                delay={0.3}
-                className="flex items-center justify-center"
-              >
-                <div className="relative aspect-[9/20] w-[300px] rounded-[2rem] border-8 border-[#27292A] bg-[#27292A] shadow-lg md:w-[340px]">
-                  <div className="absolute inset-0 flex items-center justify-center overflow-hidden rounded-[1.75rem] bg-white">
-                    <Image
-                      src="/preferences-screen.png"
-                      alt="PalAte Dietary Preferences Screen"
-                      fill
-                      className="object-cover"
-                      style={{
-                        objectPosition: "top center",
-                      }}
-                      sizes="(max-width: 768px) 300px, 340px"
-                      priority
-                    />
-                  </div>
-                </div>
-              </MotionSection>
-
-              <MotionSection>
-                <div className="space-y-4">
-                  <div className="mb-2 inline-block rounded-lg bg-[#288132] px-3 py-1 text-sm text-white">
-                    Dietary Preferences
-                  </div>
-                  <MotionHeading className="text-3xl font-bold tracking-tighter text-[#3f301d] sm:text-4xl md:text-5xl">
-                    Tailored to Your Diet
-                  </MotionHeading>
-                  <MotionParagraph
-                    className="text-[#27292A] md:text-xl"
-                    delay={0.1}
-                  >
-                    Choose your dietary preferences and we&apos;ll find
-                    restaurants that match your specific needs, whether
-                    you&apos;re vegan, gluten-free, or have religious dietary
-                    requirements.
-                  </MotionParagraph>
-
-                  <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
-                    <div className="rounded-lg bg-white p-4 shadow-md transition-shadow duration-300 hover:shadow-lg">
-                      <div className="mb-2 flex items-center gap-2">
-                        <div className="flex size-8 items-center justify-center rounded-full bg-[#288132] text-white">
-                          <Leaf className="size-4" />
-                        </div>
-                        <h3 className="font-semibold text-[#3f301d]">
-                          Dietary Restrictions
-                        </h3>
-                      </div>
-                      <p className="text-sm text-[#27292A]">
-                        From allergies to lifestyle choices, we account for all
-                        your dietary needs.
-                      </p>
-                    </div>
-
-                    <div className="rounded-lg bg-white p-4 shadow-md transition-shadow duration-300 hover:shadow-lg">
-                      <div className="mb-2 flex items-center gap-2">
-                        <div className="flex size-8 items-center justify-center rounded-full bg-[#288132] text-white">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="18"
-                            height="18"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          >
-                            <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
-                          </svg>
-                        </div>
-                        <h3 className="font-semibold text-[#3f301d]">
-                          Religious Diets
-                        </h3>
-                      </div>
-                      <p className="text-sm text-[#27292A]">
-                        We respect all religious dietary practices including
-                        Halal, Kosher, and more.
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="mt-6">
-                    <Link
-                      href="/scoring"
-                      className="inline-flex items-center font-medium text-[#288132] hover:text-[#288132]/80"
-                    >
-                      Learn more about how we generate restaurant scores
-                      <ExternalLink className="ml-2 size-4" />
-                    </Link>
                   </div>
                 </div>
               </MotionSection>
