@@ -67,6 +67,22 @@ export function MainNav() {
     return () => window.removeEventListener("resize", handleResize)
   }, [])
 
+  // Prevent background scrolling when menu is open
+  useEffect(() => {
+    if (isMenuOpen) {
+      // Apply overflow hidden to body when menu is open
+      document.body.style.overflow = "hidden"
+    } else {
+      // Restore normal overflow when menu is closed
+      document.body.style.overflow = ""
+    }
+
+    // Cleanup function to ensure overflow is restored if component unmounts
+    return () => {
+      document.body.style.overflow = ""
+    }
+  }, [isMenuOpen])
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen)
   }
@@ -195,7 +211,7 @@ export function MainNav() {
                 aria-label={isMenuOpen ? "Close menu" : "Open menu"}
                 aria-expanded={isMenuOpen}
                 aria-controls="mobile-menu"
-                className="relative z-50 rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-[#288132]"
+                className="relative z-[10000] rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-[#288132]"
               >
                 {isMenuOpen ? (
                   <X className="size-6" aria-hidden="true" />
@@ -207,15 +223,12 @@ export function MainNav() {
 
             {/* Desktop buttons - only show on large screens */}
             <div className="hidden items-center space-x-3 lg:flex">
-              <a
-                href="https://appstore.example.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center whitespace-nowrap rounded-md bg-[#288132] px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-[#288132]/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#288132] focus-visible:ring-offset-2 xl:px-5 xl:text-base"
-                aria-label="Download the PalAte app"
+              <span
+                className="inline-flex cursor-default items-center justify-center whitespace-nowrap rounded-md bg-[#288132] px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-[#288132]/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#288132] focus-visible:ring-offset-2 xl:px-5 xl:text-base"
+                aria-label="PalAte app coming soon"
               >
-                Download App
-              </a>
+                Coming Soon
+              </span>
               <Link
                 href="/contact"
                 className="inline-flex items-center justify-center whitespace-nowrap rounded-md border border-[#288132] bg-transparent px-4 py-2 text-sm font-medium text-[#288132] shadow-sm transition-colors hover:bg-[#288132]/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#288132] focus-visible:ring-offset-2 xl:px-5 xl:text-base"
@@ -228,70 +241,75 @@ export function MainNav() {
         </div>
       </div>
 
-      {/* Mobile navigation menu - animated slide-in panel */}
+      {/* Mobile navigation menu - animated slide-in panel with full-screen overlay */}
       <AnimatePresence>
         {isMenuOpen && (
-          <motion.div
-            id="mobile-menu"
-            className="fixed inset-0 z-40 bg-background pt-16 lg:hidden"
-            initial={{ opacity: 0, x: "100%" }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: "100%" }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            role="dialog"
-            aria-modal="true"
-            aria-label="Mobile navigation menu"
+          <div
+            className="fixed left-0 top-0 z-[9999] h-[100vh] w-[100vw]"
+            style={{
+              backgroundColor: "#FFF8E8",
+              opacity: 1,
+            }}
           >
-            <div className="flex h-full flex-col space-y-4 px-4 pb-6 pt-4">
-              <nav
-                className="flex flex-col space-y-4"
-                aria-label="Mobile navigation"
-              >
-                {navLinks.map((link) => (
-                  <a
-                    key={link.id}
-                    href={link.href}
-                    onClick={(e) => handleNavClick(e, link.id)}
-                    className={`rounded-md px-4 py-3 text-center text-xl font-medium hover:bg-gray-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#288132] ${
-                      activeSection === link.id && isHomePage
-                        ? "text-[#288132]"
-                        : "text-[#27292A] hover:text-[#288132]"
-                    }`}
-                    aria-current={
-                      activeSection === link.id ? "page" : undefined
-                    }
-                  >
-                    {link.label}
-                    {activeSection === link.id && isHomePage && (
-                      <span
-                        className="ml-2 inline-block size-2 rounded-full bg-[#288132]"
-                        aria-hidden="true"
-                      />
-                    )}
-                  </a>
-                ))}
-              </nav>
+            <motion.div
+              id="mobile-menu"
+              className="fixed left-0 top-0 flex h-full w-full flex-col"
+              initial={{ opacity: 0, x: "100%" }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: "100%" }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              role="dialog"
+              aria-modal="true"
+              aria-label="Mobile navigation menu"
+            >
+              <div className="flex h-full flex-col space-y-4 px-4 pb-6 pt-20">
+                <nav
+                  className="flex flex-col space-y-4"
+                  aria-label="Mobile navigation"
+                >
+                  {navLinks.map((link) => (
+                    <a
+                      key={link.id}
+                      href={link.href}
+                      onClick={(e) => handleNavClick(e, link.id)}
+                      className={`rounded-md px-4 py-3 text-center text-xl font-medium hover:bg-[#FFE1A8]/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#288132] ${
+                        activeSection === link.id && isHomePage
+                          ? "text-[#288132]"
+                          : "text-[#27292A] hover:text-[#288132]"
+                      }`}
+                      aria-current={
+                        activeSection === link.id ? "page" : undefined
+                      }
+                    >
+                      {link.label}
+                      {activeSection === link.id && isHomePage && (
+                        <span
+                          className="ml-2 inline-block size-2 rounded-full bg-[#288132]"
+                          aria-hidden="true"
+                        />
+                      )}
+                    </a>
+                  ))}
+                </nav>
 
-              <div className="mt-auto space-y-3 pt-4">
-                <a
-                  href="https://appstore.example.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex w-full items-center justify-center rounded-md bg-[#288132] px-4 py-2.5 text-base font-medium text-white shadow-sm transition-colors hover:bg-[#288132]/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#288132] focus-visible:ring-offset-2"
-                  aria-label="Download the PalAte app"
-                >
-                  Download App
-                </a>
-                <Link
-                  href="/contact"
-                  className="flex w-full items-center justify-center rounded-md border border-[#288132] bg-transparent px-4 py-2.5 text-base font-medium text-[#288132] shadow-sm transition-colors hover:bg-[#288132]/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#288132] focus-visible:ring-offset-2"
-                  aria-label="Contact PalAte support"
-                >
-                  Contact Us
-                </Link>
+                <div className="mt-auto space-y-3 pt-4">
+                  <span
+                    className="flex w-full cursor-default items-center justify-center rounded-md bg-[#288132] px-4 py-2.5 text-base font-medium text-white shadow-sm transition-colors hover:bg-[#288132]/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#288132] focus-visible:ring-offset-2"
+                    aria-label="PalAte app coming soon"
+                  >
+                    Coming Soon
+                  </span>
+                  <Link
+                    href="/contact"
+                    className="flex w-full items-center justify-center rounded-md border border-[#288132] bg-transparent px-4 py-2.5 text-base font-medium text-[#288132] shadow-sm transition-colors hover:bg-[#288132]/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#288132] focus-visible:ring-offset-2"
+                    aria-label="Contact PalAte support"
+                  >
+                    Contact Us
+                  </Link>
+                </div>
               </div>
-            </div>
-          </motion.div>
+            </motion.div>
+          </div>
         )}
       </AnimatePresence>
     </header>

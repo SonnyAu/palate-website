@@ -330,39 +330,16 @@ headers: {
                 delay={0.3}
                 className="flex items-center justify-center"
               >
-                <div className="relative aspect-[9/19.5] w-[280px] rounded-[2rem] border-8 border-[#27292A] bg-[#27292A] shadow-lg md:w-[320px]">
+                <div className="relative aspect-[9/18] w-[300px] rounded-[2rem] border-8 border-[#27292A] bg-[#27292A] shadow-lg md:w-[340px]">
                   <div className="absolute inset-0 flex items-center justify-center overflow-hidden rounded-[1.75rem] bg-gray-100">
-                    {/* Placeholder for app preview image */}
-                    <div className="p-4 text-center">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="64"
-                        height="64"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="#288132"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <rect
-                          x="3"
-                          y="3"
-                          width="18"
-                          height="18"
-                          rx="2"
-                          ry="2"
-                        />
-                        <circle cx="8.5" cy="8.5" r="1.5" />
-                        <polyline points="21 15 16 10 5 21" />
-                      </svg>
-                      <p className="mt-4 font-medium text-[#3f301d]">
-                        Party System Preview
-                      </p>
-                      <p className="mt-1 text-xs text-[#27292A]">
-                        Image coming soon
-                      </p>
-                    </div>
+                    <Image
+                      src="/party.jpg"
+                      alt="PalAte Party System"
+                      fill
+                      className="object-contain"
+                      sizes="(max-width: 768px) 300px, 340px"
+                      priority
+                    />
                   </div>
                 </div>
               </MotionSection>
