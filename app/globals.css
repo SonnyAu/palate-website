@@ -79,3 +79,114 @@
   }
 }
 
+.horizontal-scroll-container {
+  position: relative;
+  overflow-x: auto;
+  overflow-y: hidden;
+  display: flex;
+  width: 100%;
+  height: auto;
+  min-height: 100vh;
+  scrollbar-width: none; /* For Firefox */
+  -ms-overflow-style: none; /* For Internet Explorer and Edge */
+}
+
+.horizontal-scroll-container::-webkit-scrollbar {
+  display: none; /* For Chrome, Safari, and Opera */
+}
+
+.horizontal-slide {
+  flex: 0 0 100%;
+  width: 100%;
+  min-width: 100%;
+}
+
+.horizontal-scroll-container.active {
+  z-index: 10;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+
+/* Responsive adjustments for the horizontal slides */
+@media (max-width: 768px) {
+  .horizontal-scroll-container {
+    min-height: auto;
+    height: auto;
+  }
+
+  .horizontal-slide {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  /* Ensure content fits better on mobile */
+  .horizontal-slide .container {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  /* Adjust grid layouts for better mobile display */
+  .horizontal-slide .grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  /* Make sure images don't overflow */
+  .horizontal-slide img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* Add these specific styles for the horizontal slides and their cards */
+@media (max-width: 1200px) {
+  /* Improve horizontal slide layout at medium screen sizes */
+  .horizontal-slide .container {
+    width: 100%;
+    max-width: 100%;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  /* Ensure text doesn't overflow */
+  .horizontal-slide h2,
+  .horizontal-slide h3 {
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    word-wrap: break-word;
+  }
+
+  /* Ensure description cards are always visible */
+  .horizontal-slide .grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Make sure cards don't get too small */
+  .horizontal-slide .rounded-lg {
+    min-width: auto;
+    width: 100%;
+  }
+}
+
+/* Specific adjustments for very small screens */
+@media (max-width: 640px) {
+  .horizontal-slide {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  .horizontal-slide .container {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  /* Reduce padding in cards for small screens */
+  .horizontal-slide .p-4 {
+    padding: 0.75rem;
+  }
+
+  /* Make text smaller on very small screens */
+  .horizontal-slide p {
+    font-size: 0.875rem;
+  }
+}
