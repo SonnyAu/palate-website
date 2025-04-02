@@ -229,7 +229,7 @@ headers: {
         <HorizontalScrollContainer>
           <section
             id="diets"
-            className="horizontal-slide relative w-full overflow-hidden py-12 md:py-24 lg:py-32"
+            className="horizontal-slide relative w-full overflow-hidden py-1 md:py-2 lg:py-3"
           >
             <WavyGradientBackground baseColor="#FFD8B5" />
             <FloatingShape
@@ -248,13 +248,13 @@ headers: {
               delay={1.2}
               duration={23}
             />
-            <div className="container relative px-4 md:px-6">
-              <div className="grid items-center gap-6 lg:grid-cols-2 lg:gap-12">
+            <div className="container relative flex h-full items-center px-2 md:px-4">
+              <div className="grid items-center gap-2 lg:grid-cols-2 lg:gap-4">
                 <MotionSection
                   delay={0.3}
                   className="flex items-center justify-center"
                 >
-                  <div className="relative h-[600px] w-[300px] overflow-hidden rounded-[2.5rem] border-8 border-[#27292A] shadow-2xl">
+                  <div className="phone-preview relative overflow-hidden rounded-[2.5rem] border-8 border-[#27292A] shadow-2xl">
                     <div className="absolute inset-0 flex items-center justify-center overflow-hidden rounded-[2.1rem] bg-white">
                       <Image
                         src="/preferences-screen.png"
@@ -264,7 +264,7 @@ headers: {
                         style={{
                           objectPosition: "top center",
                         }}
-                        sizes="300px"
+                        sizes="(max-width: 640px) 100px, (max-width: 768px) 120px, (max-width: 1024px) 140px, (max-width: 1200px) 150px, (max-width: 1366px) 175px, (max-width: 1600px) 200px, 250px"
                         priority
                       />
                     </div>
@@ -272,15 +272,15 @@ headers: {
                 </MotionSection>
 
                 <MotionSection>
-                  <div className="space-y-4">
-                    <div className="mb-2 inline-block rounded-lg bg-[#288132] px-3 py-1 text-sm text-white">
+                  <div className="space-y-2">
+                    <div className="mb-1 inline-block w-auto max-w-fit whitespace-nowrap rounded-lg bg-[#288132] px-2 py-1 text-xs text-white">
                       Dietary Preferences
                     </div>
-                    <MotionHeading className="text-3xl font-bold tracking-tighter text-[#3f301d] sm:text-4xl md:text-5xl">
+                    <MotionHeading className="text-2xl font-bold tracking-tighter text-[#3f301d] sm:text-3xl md:text-4xl">
                       Tailored to Your Diet
                     </MotionHeading>
                     <MotionParagraph
-                      className="text-[#27292A] md:text-xl"
+                      className="text-sm text-[#27292A] md:text-base"
                       delay={0.1}
                     >
                       Choose your dietary preferences and we&apos;ll find
@@ -289,29 +289,29 @@ headers: {
                       requirements.
                     </MotionParagraph>
 
-                    <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-1 md:grid-cols-2">
-                      <div className="rounded-lg bg-white p-4 shadow-md transition-shadow duration-300 hover:shadow-lg">
-                        <div className="mb-2 flex items-center gap-2">
-                          <div className="flex size-8 items-center justify-center rounded-full bg-[#288132] text-white">
-                            <Leaf className="size-4" />
+                    <div className="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-1 md:grid-cols-2">
+                      <div className="rounded-lg bg-white p-3 shadow-md transition-shadow duration-300 hover:shadow-lg">
+                        <div className="mb-1 flex items-center gap-2">
+                          <div className="flex size-6 items-center justify-center rounded-full bg-[#288132] text-white">
+                            <Leaf className="size-3" />
                           </div>
-                          <h3 className="font-semibold text-[#3f301d]">
+                          <h3 className="text-sm font-semibold text-[#3f301d]">
                             Dietary Restrictions
                           </h3>
                         </div>
-                        <p className="text-sm text-[#27292A]">
+                        <p className="text-xs text-[#27292A]">
                           From allergies to lifestyle choices, we account for
                           all your dietary needs.
                         </p>
                       </div>
 
-                      <div className="rounded-lg bg-white p-4 shadow-md transition-shadow duration-300 hover:shadow-lg">
-                        <div className="mb-2 flex items-center gap-2">
-                          <div className="flex size-8 items-center justify-center rounded-full bg-[#288132] text-white">
+                      <div className="rounded-lg bg-white p-3 shadow-md transition-shadow duration-300 hover:shadow-lg">
+                        <div className="mb-1 flex items-center gap-2">
+                          <div className="flex size-6 items-center justify-center rounded-full bg-[#288132] text-white">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
-                              width="18"
-                              height="18"
+                              width="12"
+                              height="12"
                               viewBox="0 0 24 24"
                               fill="none"
                               stroke="currentColor"
@@ -322,24 +322,24 @@ headers: {
                               <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
                             </svg>
                           </div>
-                          <h3 className="font-semibold text-[#3f301d]">
+                          <h3 className="text-sm font-semibold text-[#3f301d]">
                             Religious Diets
                           </h3>
                         </div>
-                        <p className="text-sm text-[#27292A]">
+                        <p className="text-xs text-[#27292A]">
                           We respect all religious dietary practices including
                           Halal, Kosher, and more.
                         </p>
                       </div>
                     </div>
 
-                    <div className="mt-6">
+                    <div className="mt-2">
                       <Link
                         href="/scoring"
-                        className="inline-flex items-center font-medium text-[#288132] hover:text-[#288132]/80"
+                        className="inline-flex items-center text-sm font-medium text-[#288132] hover:text-[#288132]/80"
                       >
                         Learn more about how we generate restaurant scores
-                        <ExternalLink className="ml-2 size-4" />
+                        <ExternalLink className="ml-1 size-3" />
                       </Link>
                     </div>
                   </div>
@@ -350,7 +350,7 @@ headers: {
 
           <section
             id="party"
-            className="horizontal-slide relative w-full overflow-hidden py-12 md:py-24 lg:py-32"
+            className="horizontal-slide relative w-full overflow-hidden py-1 md:py-2 lg:py-3"
           >
             <WavyGradientBackground baseColor="#FFEBB5" />
             <FloatingShape
@@ -369,18 +369,18 @@ headers: {
               delay={1.3}
               duration={19}
             />
-            <div className="container relative px-4 md:px-6">
-              <div className="grid items-center gap-6 lg:grid-cols-2 lg:gap-12">
+            <div className="container relative flex h-full items-center px-2 md:px-4">
+              <div className="grid items-center gap-2 lg:grid-cols-2 lg:gap-4">
                 <MotionSection>
-                  <div className="space-y-4">
-                    <div className="mb-2 inline-block rounded-lg bg-[#288132] px-3 py-1 text-sm text-white">
+                  <div className="space-y-2">
+                    <div className="mb-1 inline-block w-auto max-w-fit whitespace-nowrap rounded-lg bg-[#288132] px-2 py-1 text-xs text-white">
                       Party System
                     </div>
-                    <MotionHeading className="text-3xl font-bold tracking-tighter text-[#3f301d] sm:text-4xl md:text-5xl">
+                    <MotionHeading className="text-2xl font-bold tracking-tighter text-[#3f301d] sm:text-3xl md:text-4xl">
                       Dine Together, Eat Right
                     </MotionHeading>
                     <MotionParagraph
-                      className="text-[#27292A] md:text-xl"
+                      className="text-sm text-[#27292A] md:text-base"
                       delay={0.1}
                     >
                       Create a party, share your dietary needs, and get
@@ -388,14 +388,14 @@ headers: {
                       everyone&apos;s preferences.
                     </MotionParagraph>
 
-                    <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
-                      <div className="rounded-lg bg-white p-4 shadow-md transition-shadow duration-300 hover:shadow-lg">
-                        <div className="mb-2 flex items-center gap-2">
-                          <div className="flex size-8 items-center justify-center rounded-full bg-[#288132] text-white">
+                    <div className="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-1 md:grid-cols-2">
+                      <div className="rounded-lg bg-white p-3 shadow-md transition-shadow duration-300 hover:shadow-lg">
+                        <div className="mb-1 flex items-center gap-2">
+                          <div className="flex size-6 items-center justify-center rounded-full bg-[#288132] text-white">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
-                              width="18"
-                              height="18"
+                              width="12"
+                              height="12"
                               viewBox="0 0 24 24"
                               fill="none"
                               stroke="currentColor"
@@ -409,23 +409,23 @@ headers: {
                               <path d="M16 3.13a4 4 0 0 1 0 7.75" />
                             </svg>
                           </div>
-                          <h3 className="font-semibold text-[#3f301d]">
+                          <h3 className="text-sm font-semibold text-[#3f301d]">
                             Invite Friends
                           </h3>
                         </div>
-                        <p className="text-sm text-[#27292A]">
+                        <p className="text-xs text-[#27292A]">
                           Easily invite friends to join your dining party with a
                           simple link.
                         </p>
                       </div>
 
-                      <div className="rounded-lg bg-white p-4 shadow-md transition-shadow duration-300 hover:shadow-lg">
-                        <div className="mb-2 flex items-center gap-2">
-                          <div className="flex size-8 items-center justify-center rounded-full bg-[#288132] text-white">
+                      <div className="rounded-lg bg-white p-3 shadow-md transition-shadow duration-300 hover:shadow-lg">
+                        <div className="mb-1 flex items-center gap-2">
+                          <div className="flex size-6 items-center justify-center rounded-full bg-[#288132] text-white">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
-                              width="18"
-                              height="18"
+                              width="12"
+                              height="12"
                               viewBox="0 0 24 24"
                               fill="none"
                               stroke="currentColor"
@@ -437,11 +437,11 @@ headers: {
                               <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
                             </svg>
                           </div>
-                          <h3 className="font-semibold text-[#3f301d]">
+                          <h3 className="text-sm font-semibold text-[#3f301d]">
                             Combine Preferences
                           </h3>
                         </div>
-                        <p className="text-sm text-[#27292A]">
+                        <p className="text-xs text-[#27292A]">
                           Our app automatically combines everyone&apos;s dietary
                           needs into one search.
                         </p>
@@ -454,14 +454,17 @@ headers: {
                   delay={0.3}
                   className="flex items-center justify-center"
                 >
-                  <div className="relative h-[600px] w-[300px] overflow-hidden rounded-[2.5rem] border-8 border-[#27292A] shadow-2xl">
+                  <div className="phone-preview relative overflow-hidden rounded-[2.5rem] border-8 border-[#27292A] shadow-2xl">
                     <div className="absolute inset-0 flex items-center justify-center overflow-hidden rounded-[2.1rem] bg-gray-100">
                       <Image
                         src="/party.jpg"
                         alt="PalAte Party System"
                         fill
-                        className="object-contain"
-                        sizes="300px"
+                        className="object-cover"
+                        style={{
+                          objectPosition: "center center",
+                        }}
+                        sizes="(max-width: 640px) 100px, (max-width: 768px) 120px, (max-width: 1024px) 140px, (max-width: 1200px) 150px, (max-width: 1366px) 175px, (max-width: 1600px) 200px, 250px"
                         priority
                       />
                     </div>
