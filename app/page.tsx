@@ -3,15 +3,7 @@
 import type React from "react"
 import Image from "next/image"
 import Link from "next/link"
-import {
-  Apple,
-  ArrowRight,
-  Database,
-  ExternalLink,
-  Leaf,
-  Lock,
-  Utensils,
-} from "lucide-react"
+import { Apple, ArrowRight, Database, Leaf, Lock, Utensils } from "lucide-react"
 import { FloatingShape } from "@/components/animations/floating-shape"
 import { MotionButton } from "@/components/animations/motion-button"
 import { MotionHeading } from "@/components/animations/motion-heading"
@@ -19,8 +11,8 @@ import { MotionParagraph } from "@/components/animations/motion-paragraph"
 import { MotionSection } from "@/components/animations/motion-section"
 import { TypewriterCode } from "@/components/animations/typewriter-code"
 import { WavyGradientBackground } from "@/components/animations/wavy-gradient-background"
-import { HorizontalScrollContainer } from "@/components/horizontal-scroll-container"
 import { MainNav } from "@/components/main-nav"
+import { ScrollTransitionSection } from "@/components/scroll-transition-section"
 import { Input } from "@/components/ui/input"
 
 export default function Home() {
@@ -225,255 +217,47 @@ headers: {
           </div>
         </section>
 
-        {/* Horizontal scroll section for Dietary Preferences and Party System */}
-        <HorizontalScrollContainer>
-          <section
-            id="diets"
-            className="horizontal-slide relative w-full overflow-hidden py-1 md:py-2 lg:py-3"
-          >
-            <WavyGradientBackground baseColor="#FFD8B5" />
-            <FloatingShape
-              type="triangle"
-              size={180}
-              color="#288132"
-              className="right-[15%] top-60 opacity-5"
-              delay={0.7}
-              duration={18}
-            />
-            <FloatingShape
-              type="circle"
-              size={120}
-              color="#3f301d"
-              className="bottom-40 left-[20%] opacity-5"
-              delay={1.2}
-              duration={23}
-            />
-            <div className="container relative flex h-full items-center px-2 md:px-4">
-              <div className="grid items-center gap-2 lg:grid-cols-2 lg:gap-4">
-                <MotionSection
-                  delay={0.3}
-                  className="flex items-center justify-center"
-                >
-                  <div className="phone-preview relative overflow-hidden rounded-[2.5rem] border-8 border-[#27292A] shadow-2xl">
-                    <div className="absolute inset-0 flex items-center justify-center overflow-hidden rounded-[2.1rem] bg-white">
-                      <Image
-                        src="/preferences-screen.png"
-                        alt="PalAte Dietary Preferences Screen"
-                        fill
-                        className="object-cover"
-                        style={{
-                          objectPosition: "top center",
-                        }}
-                        sizes="(max-width: 640px) 100px, (max-width: 768px) 120px, (max-width: 1024px) 140px, (max-width: 1200px) 150px, (max-width: 1366px) 175px, (max-width: 1600px) 200px, 250px"
-                        priority
-                      />
-                    </div>
-                  </div>
-                </MotionSection>
-
-                <MotionSection>
-                  <div className="space-y-2">
-                    <div className="mb-1 inline-block w-auto max-w-fit whitespace-nowrap rounded-lg bg-[#288132] px-2 py-1 text-xs text-white">
-                      Dietary Preferences
-                    </div>
-                    <MotionHeading className="text-2xl font-bold tracking-tighter text-[#3f301d] sm:text-3xl md:text-4xl">
-                      Tailored to Your Diet
-                    </MotionHeading>
-                    <MotionParagraph
-                      className="text-sm text-[#27292A] md:text-base"
-                      delay={0.1}
-                    >
-                      Choose your dietary preferences and we&apos;ll find
-                      restaurants that match your specific needs, whether
-                      you&apos;re vegan, gluten-free, or have religious dietary
-                      requirements.
-                    </MotionParagraph>
-
-                    <div className="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-1 md:grid-cols-2">
-                      <div className="rounded-lg bg-white p-3 shadow-md transition-shadow duration-300 hover:shadow-lg">
-                        <div className="mb-1 flex items-center gap-2">
-                          <div className="flex size-6 items-center justify-center rounded-full bg-[#288132] text-white">
-                            <Leaf className="size-3" />
-                          </div>
-                          <h3 className="text-sm font-semibold text-[#3f301d]">
-                            Dietary Restrictions
-                          </h3>
-                        </div>
-                        <p className="text-xs text-[#27292A]">
-                          From allergies to lifestyle choices, we account for
-                          all your dietary needs.
-                        </p>
-                      </div>
-
-                      <div className="rounded-lg bg-white p-3 shadow-md transition-shadow duration-300 hover:shadow-lg">
-                        <div className="mb-1 flex items-center gap-2">
-                          <div className="flex size-6 items-center justify-center rounded-full bg-[#288132] text-white">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="12"
-                              height="12"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            >
-                              <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
-                            </svg>
-                          </div>
-                          <h3 className="text-sm font-semibold text-[#3f301d]">
-                            Religious Diets
-                          </h3>
-                        </div>
-                        <p className="text-xs text-[#27292A]">
-                          We respect all religious dietary practices including
-                          Halal, Kosher, and more.
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="mt-2">
-                      <Link
-                        href="/scoring"
-                        className="inline-flex items-center text-sm font-medium text-[#288132] hover:text-[#288132]/80"
-                      >
-                        Learn more about how we generate restaurant scores
-                        <ExternalLink className="ml-1 size-3" />
-                      </Link>
-                    </div>
-                  </div>
-                </MotionSection>
-              </div>
-            </div>
-          </section>
-
-          <section
-            id="party"
-            className="horizontal-slide relative w-full overflow-hidden py-1 md:py-2 lg:py-3"
-          >
-            <WavyGradientBackground baseColor="#FFEBB5" />
-            <FloatingShape
-              type="circle"
-              size={200}
-              color="#288132"
-              className="left-[15%] top-40 opacity-5"
-              delay={0.5}
-              duration={22}
-            />
-            <FloatingShape
-              type="blob"
-              size={180}
-              color="#3f301d"
-              className="bottom-20 right-[10%] opacity-5"
-              delay={1.3}
-              duration={19}
-            />
-            <div className="container relative flex h-full items-center px-2 md:px-4">
-              <div className="grid items-center gap-2 lg:grid-cols-2 lg:gap-4">
-                <MotionSection>
-                  <div className="space-y-2">
-                    <div className="mb-1 inline-block w-auto max-w-fit whitespace-nowrap rounded-lg bg-[#288132] px-2 py-1 text-xs text-white">
-                      Party System
-                    </div>
-                    <MotionHeading className="text-2xl font-bold tracking-tighter text-[#3f301d] sm:text-3xl md:text-4xl">
-                      Dine Together, Eat Right
-                    </MotionHeading>
-                    <MotionParagraph
-                      className="text-sm text-[#27292A] md:text-base"
-                      delay={0.1}
-                    >
-                      Create a party, share your dietary needs, and get
-                      group-friendly restaurant suggestions that match
-                      everyone&apos;s preferences.
-                    </MotionParagraph>
-
-                    <div className="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-1 md:grid-cols-2">
-                      <div className="rounded-lg bg-white p-3 shadow-md transition-shadow duration-300 hover:shadow-lg">
-                        <div className="mb-1 flex items-center gap-2">
-                          <div className="flex size-6 items-center justify-center rounded-full bg-[#288132] text-white">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="12"
-                              height="12"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            >
-                              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-                              <circle cx="9" cy="7" r="4" />
-                              <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
-                              <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                            </svg>
-                          </div>
-                          <h3 className="text-sm font-semibold text-[#3f301d]">
-                            Invite Friends
-                          </h3>
-                        </div>
-                        <p className="text-xs text-[#27292A]">
-                          Easily invite friends to join your dining party with a
-                          simple link.
-                        </p>
-                      </div>
-
-                      <div className="rounded-lg bg-white p-3 shadow-md transition-shadow duration-300 hover:shadow-lg">
-                        <div className="mb-1 flex items-center gap-2">
-                          <div className="flex size-6 items-center justify-center rounded-full bg-[#288132] text-white">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="12"
-                              height="12"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            >
-                              <path d="M12 20h9" />
-                              <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
-                            </svg>
-                          </div>
-                          <h3 className="text-sm font-semibold text-[#3f301d]">
-                            Combine Preferences
-                          </h3>
-                        </div>
-                        <p className="text-xs text-[#27292A]">
-                          Our app automatically combines everyone&apos;s dietary
-                          needs into one search.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </MotionSection>
-
-                <MotionSection
-                  delay={0.3}
-                  className="flex items-center justify-center"
-                >
-                  <div className="phone-preview relative overflow-hidden rounded-[2.5rem] border-8 border-[#27292A] shadow-2xl">
-                    <div className="absolute inset-0 flex items-center justify-center overflow-hidden rounded-[2.1rem] bg-gray-100">
-                      <Image
-                        src="/party.jpg"
-                        alt="PalAte Party System"
-                        fill
-                        className="object-cover"
-                        style={{
-                          objectPosition: "center center",
-                        }}
-                        sizes="(max-width: 640px) 100px, (max-width: 768px) 120px, (max-width: 1024px) 140px, (max-width: 1200px) 150px, (max-width: 1366px) 175px, (max-width: 1600px) 200px, 250px"
-                        priority
-                      />
-                    </div>
-                  </div>
-                </MotionSection>
-              </div>
-            </div>
-          </section>
-        </HorizontalScrollContainer>
+        {/* Scroll transition section for Dietary Preferences and Party System */}
+        <ScrollTransitionSection
+          preferencesScreen={{
+            image: "/preferences-screen.png",
+            tag: "Dietary Preferences",
+            title: "Tailored to Your Diet",
+            description:
+              "Choose your dietary preferences and we'll find restaurants that match your specific needs, whether you're vegan, gluten-free, or have religious dietary requirements.",
+            features: [
+              {
+                title: "Choose Your Dietary Preferences",
+                description:
+                  "Select from a wide range of dietary options including vegan, keto, halal, kosher, and more.",
+              },
+              {
+                title: "Automatic Restaurant Scoring",
+                description:
+                  "Restaurants are automatically scored based on how well they match your specific dietary needs.",
+              },
+            ],
+          }}
+          partyScreen={{
+            image: "/party.jpg",
+            tag: "Party System",
+            title: "Dine Together, Eat Right",
+            description:
+              "Create a party, share your dietary needs, and get group-friendly restaurant suggestions that match everyone's preferences.",
+            features: [
+              {
+                title: "Invite Friends to Your Party",
+                description:
+                  "Easily invite friends and family to join your dining party with just a few taps.",
+              },
+              {
+                title: "Smart Group Recommendations",
+                description:
+                  "Our app automatically scores and recommends restaurants based on the party's combined preferences.",
+              },
+            ],
+          }}
+        />
 
         <section id="about" className="relative w-full py-12 md:py-24 lg:py-32">
           <FloatingShape

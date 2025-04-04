@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react"
 import { motion, useInView, useReducedMotion } from "framer-motion"
 
 interface TypewriterCodeProps {
-  code: string
+  code?: string
   language?: string
   typingSpeed?: number
   className?: string
@@ -12,7 +12,15 @@ interface TypewriterCodeProps {
 }
 
 export function TypewriterCode({
-  code,
+  code = `fetch("https://api.example.com/v1/restaurants", {
+method: "GET",
+headers: {
+  "Authorization": "Bearer YOUR_API_KEY",
+  "Content-Type": "application/json"
+}
+})
+.then(response => response.json())
+.then(data => console.log(data));`,
   language = "javascript",
   typingSpeed = 30, // ms per character
   className = "",

@@ -129,148 +129,152 @@ export default function ScoringPage() {
                       Our Classification Tags
                     </h3>
 
-                    <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-                      {/* Religious Dietary Tags */}
-                      <div className="rounded-lg border border-[#FFE1A8] bg-[#FFE1A8]/10 p-4">
-                        <div className="mb-3 flex items-center">
-                          <Shield className="mr-2 size-5 text-[#288132]" />
-                          <h4 className="font-semibold text-[#3f301d]">
-                            Religious
-                          </h4>
-                        </div>
-                        <div className="flex flex-wrap gap-2">
-                          <span className="inline-flex items-center rounded-full bg-[#288132]/10 px-2.5 py-0.5 text-sm font-medium text-[#288132]">
-                            halal
-                          </span>
-                          <span className="inline-flex items-center rounded-full bg-[#288132]/10 px-2.5 py-0.5 text-sm font-medium text-[#288132]">
-                            kosher
-                          </span>
-                        </div>
-                      </div>
+                    <div className="flex justify-center">
+                      <div className="mt-6 w-full max-w-[1100px]">
+                        <div className="grid auto-rows-fr grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                          {/* Religious Dietary Tags */}
+                          <div className="rounded-lg border border-[#FFE1A8] bg-[#FFE1A8]/10 p-4">
+                            <div className="mb-3 flex items-center">
+                              <Shield className="mr-2 size-5 text-[#288132]" />
+                              <h4 className="font-semibold text-[#3f301d]">
+                                Religious
+                              </h4>
+                            </div>
+                            <div className="flex flex-wrap justify-center gap-2">
+                              <span className="inline-flex items-center rounded-full bg-[#288132]/10 px-2.5 py-0.5 text-sm font-medium text-[#288132]">
+                                halal
+                              </span>
+                              <span className="inline-flex items-center rounded-full bg-[#288132]/10 px-2.5 py-0.5 text-sm font-medium text-[#288132]">
+                                kosher
+                              </span>
+                            </div>
+                          </div>
 
-                      {/* Meat Types Tags */}
-                      <div className="rounded-lg border border-[#FFE1A8] bg-[#FFE1A8]/10 p-4">
-                        <div className="mb-3 flex items-center">
-                          <Utensils className="mr-2 size-5 text-[#288132]" />
-                          <h4 className="font-semibold text-[#3f301d]">
-                            Meat Types
-                          </h4>
-                        </div>
-                        <div className="flex flex-wrap gap-2">
-                          <span className="inline-flex items-center rounded-full bg-[#288132]/10 px-2.5 py-0.5 text-sm font-medium text-[#288132]">
-                            has_meat
-                          </span>
-                          <span className="inline-flex items-center rounded-full bg-[#288132]/10 px-2.5 py-0.5 text-sm font-medium text-[#288132]">
-                            sea_food
-                          </span>
-                          <span className="inline-flex items-center rounded-full bg-[#288132]/10 px-2.5 py-0.5 text-sm font-medium text-[#288132]">
-                            red_meat
-                          </span>
-                          <span className="inline-flex items-center rounded-full bg-[#288132]/10 px-2.5 py-0.5 text-sm font-medium text-[#288132]">
-                            poultry
-                          </span>
-                          <span className="inline-flex items-center rounded-full bg-[#288132]/10 px-2.5 py-0.5 text-sm font-medium text-[#288132]">
-                            other_meat
-                          </span>
-                        </div>
-                      </div>
+                          {/* Meat Types Tags */}
+                          <div className="rounded-lg border border-[#FFE1A8] bg-[#FFE1A8]/10 p-4">
+                            <div className="mb-3 flex items-center">
+                              <Utensils className="mr-2 size-5 text-[#288132]" />
+                              <h4 className="font-semibold text-[#3f301d]">
+                                Meat Types
+                              </h4>
+                            </div>
+                            <div className="flex flex-wrap justify-center gap-2">
+                              <span className="inline-flex items-center rounded-full bg-[#288132]/10 px-2.5 py-0.5 text-sm font-medium text-[#288132]">
+                                has_meat
+                              </span>
+                              <span className="inline-flex items-center rounded-full bg-[#288132]/10 px-2.5 py-0.5 text-sm font-medium text-[#288132]">
+                                sea_food
+                              </span>
+                              <span className="inline-flex items-center rounded-full bg-[#288132]/10 px-2.5 py-0.5 text-sm font-medium text-[#288132]">
+                                red_meat
+                              </span>
+                              <span className="inline-flex items-center rounded-full bg-[#288132]/10 px-2.5 py-0.5 text-sm font-medium text-[#288132]">
+                                poultry
+                              </span>
+                              <span className="inline-flex items-center rounded-full bg-[#288132]/10 px-2.5 py-0.5 text-sm font-medium text-[#288132]">
+                                other_meat
+                              </span>
+                            </div>
+                          </div>
 
-                      {/* Animal Products Tags */}
-                      <div className="rounded-lg border border-[#FFE1A8] bg-[#FFE1A8]/10 p-4">
-                        <div className="mb-3 flex items-center">
-                          <Egg className="mr-2 size-5 text-[#288132]" />
-                          <h4 className="font-semibold text-[#3f301d]">
-                            Animal Products
-                          </h4>
-                        </div>
-                        <div className="flex flex-wrap gap-2">
-                          <span className="inline-flex items-center rounded-full bg-[#288132]/10 px-2.5 py-0.5 text-sm font-medium text-[#288132]">
-                            eggs
-                          </span>
-                          <span className="inline-flex items-center rounded-full bg-[#288132]/10 px-2.5 py-0.5 text-sm font-medium text-[#288132]">
-                            dairy
-                          </span>
-                          <span className="inline-flex items-center rounded-full bg-[#288132]/10 px-2.5 py-0.5 text-sm font-medium text-[#288132]">
-                            honey
-                          </span>
-                          <span className="inline-flex items-center rounded-full bg-[#288132]/10 px-2.5 py-0.5 text-sm font-medium text-[#288132]">
-                            fish
-                          </span>
-                          <span className="inline-flex items-center rounded-full bg-[#288132]/10 px-2.5 py-0.5 text-sm font-medium text-[#288132]">
-                            shellfish
-                          </span>
-                        </div>
-                      </div>
+                          {/* Animal Products Tags */}
+                          <div className="rounded-lg border border-[#FFE1A8] bg-[#FFE1A8]/10 p-4">
+                            <div className="mb-3 flex items-center">
+                              <Egg className="mr-2 size-5 text-[#288132]" />
+                              <h4 className="font-semibold text-[#3f301d]">
+                                Animal Products
+                              </h4>
+                            </div>
+                            <div className="flex flex-wrap justify-center gap-2">
+                              <span className="inline-flex items-center rounded-full bg-[#288132]/10 px-2.5 py-0.5 text-sm font-medium text-[#288132]">
+                                eggs
+                              </span>
+                              <span className="inline-flex items-center rounded-full bg-[#288132]/10 px-2.5 py-0.5 text-sm font-medium text-[#288132]">
+                                dairy
+                              </span>
+                              <span className="inline-flex items-center rounded-full bg-[#288132]/10 px-2.5 py-0.5 text-sm font-medium text-[#288132]">
+                                honey
+                              </span>
+                              <span className="inline-flex items-center rounded-full bg-[#288132]/10 px-2.5 py-0.5 text-sm font-medium text-[#288132]">
+                                fish
+                              </span>
+                              <span className="inline-flex items-center rounded-full bg-[#288132]/10 px-2.5 py-0.5 text-sm font-medium text-[#288132]">
+                                shellfish
+                              </span>
+                            </div>
+                          </div>
 
-                      {/* Allergens Tags */}
-                      <div className="rounded-lg border border-[#FFE1A8] bg-[#FFE1A8]/10 p-4">
-                        <div className="mb-3 flex items-center">
-                          <Wheat className="mr-2 size-5 text-[#288132]" />
-                          <h4 className="font-semibold text-[#3f301d]">
-                            Allergens
-                          </h4>
-                        </div>
-                        <div className="flex flex-wrap gap-2">
-                          <span className="inline-flex items-center rounded-full bg-[#288132]/10 px-2.5 py-0.5 text-sm font-medium text-[#288132]">
-                            tree_nut
-                          </span>
-                          <span className="inline-flex items-center rounded-full bg-[#288132]/10 px-2.5 py-0.5 text-sm font-medium text-[#288132]">
-                            peanut
-                          </span>
-                          <span className="inline-flex items-center rounded-full bg-[#288132]/10 px-2.5 py-0.5 text-sm font-medium text-[#288132]">
-                            soy
-                          </span>
-                          <span className="inline-flex items-center rounded-full bg-[#288132]/10 px-2.5 py-0.5 text-sm font-medium text-[#288132]">
-                            wheat
-                          </span>
-                          <span className="inline-flex items-center rounded-full bg-[#288132]/10 px-2.5 py-0.5 text-sm font-medium text-[#288132]">
-                            gluten
-                          </span>
-                          <span className="inline-flex items-center rounded-full bg-[#288132]/10 px-2.5 py-0.5 text-sm font-medium text-[#288132]">
-                            lactose
-                          </span>
-                        </div>
-                      </div>
+                          {/* Allergens Tags */}
+                          <div className="rounded-lg border border-[#FFE1A8] bg-[#FFE1A8]/10 p-4">
+                            <div className="mb-3 flex items-center">
+                              <Wheat className="mr-2 size-5 text-[#288132]" />
+                              <h4 className="font-semibold text-[#3f301d]">
+                                Allergens
+                              </h4>
+                            </div>
+                            <div className="flex flex-wrap justify-center gap-2">
+                              <span className="inline-flex items-center rounded-full bg-[#288132]/10 px-2.5 py-0.5 text-sm font-medium text-[#288132]">
+                                tree_nut
+                              </span>
+                              <span className="inline-flex items-center rounded-full bg-[#288132]/10 px-2.5 py-0.5 text-sm font-medium text-[#288132]">
+                                peanut
+                              </span>
+                              <span className="inline-flex items-center rounded-full bg-[#288132]/10 px-2.5 py-0.5 text-sm font-medium text-[#288132]">
+                                soy
+                              </span>
+                              <span className="inline-flex items-center rounded-full bg-[#288132]/10 px-2.5 py-0.5 text-sm font-medium text-[#288132]">
+                                wheat
+                              </span>
+                              <span className="inline-flex items-center rounded-full bg-[#288132]/10 px-2.5 py-0.5 text-sm font-medium text-[#288132]">
+                                gluten
+                              </span>
+                              <span className="inline-flex items-center rounded-full bg-[#288132]/10 px-2.5 py-0.5 text-sm font-medium text-[#288132]">
+                                lactose
+                              </span>
+                            </div>
+                          </div>
 
-                      {/* Diet Types Tags */}
-                      <div className="rounded-lg border border-[#FFE1A8] bg-[#FFE1A8]/10 p-4">
-                        <div className="mb-3 flex items-center">
-                          <Leaf className="mr-2 size-5 text-[#288132]" />
-                          <h4 className="font-semibold text-[#3f301d]">
-                            Diet Types
-                          </h4>
-                        </div>
-                        <div className="flex flex-wrap gap-2">
-                          <span className="inline-flex items-center rounded-full bg-[#288132]/10 px-2.5 py-0.5 text-sm font-medium text-[#288132]">
-                            mediterranean
-                          </span>
-                        </div>
-                      </div>
+                          {/* Diet Types Tags */}
+                          <div className="rounded-lg border border-[#FFE1A8] bg-[#FFE1A8]/10 p-4 lg:col-start-2">
+                            <div className="mb-3 flex items-center">
+                              <Leaf className="mr-2 size-5 text-[#288132]" />
+                              <h4 className="font-semibold text-[#3f301d]">
+                                Diet Types
+                              </h4>
+                            </div>
+                            <div className="flex flex-wrap justify-center gap-2">
+                              <span className="inline-flex items-center rounded-full bg-[#288132]/10 px-2.5 py-0.5 text-sm font-medium text-[#288132]">
+                                mediteranian
+                              </span>
+                            </div>
+                          </div>
 
-                      {/* Nutritional Tags */}
-                      <div className="rounded-lg border border-[#FFE1A8] bg-[#FFE1A8]/10 p-4">
-                        <div className="mb-3 flex items-center">
-                          <BarChart3 className="mr-2 size-5 text-[#288132]" />
-                          <h4 className="font-semibold text-[#3f301d]">
-                            Nutritional
-                          </h4>
-                        </div>
-                        <div className="flex flex-wrap gap-2">
-                          <span className="inline-flex items-center rounded-full bg-[#288132]/10 px-2.5 py-0.5 text-sm font-medium text-[#288132]">
-                            low_sugar
-                          </span>
-                          <span className="inline-flex items-center rounded-full bg-[#288132]/10 px-2.5 py-0.5 text-sm font-medium text-[#288132]">
-                            carbs
-                          </span>
-                          <span className="inline-flex items-center rounded-full bg-[#288132]/10 px-2.5 py-0.5 text-sm font-medium text-[#288132]">
-                            protein
-                          </span>
-                          <span className="inline-flex items-center rounded-full bg-[#288132]/10 px-2.5 py-0.5 text-sm font-medium text-[#288132]">
-                            fat
-                          </span>
-                          <span className="inline-flex items-center rounded-full bg-[#288132]/10 px-2.5 py-0.5 text-sm font-medium text-[#288132]">
-                            calories
-                          </span>
+                          {/* Nutritional Tags */}
+                          <div className="rounded-lg border border-[#FFE1A8] bg-[#FFE1A8]/10 p-4 lg:col-start-3">
+                            <div className="mb-3 flex items-center">
+                              <BarChart3 className="mr-2 size-5 text-[#288132]" />
+                              <h4 className="font-semibold text-[#3f301d]">
+                                Nutritional
+                              </h4>
+                            </div>
+                            <div className="flex flex-wrap justify-center gap-2">
+                              <span className="inline-flex items-center rounded-full bg-[#288132]/10 px-2.5 py-0.5 text-sm font-medium text-[#288132]">
+                                low_sugar
+                              </span>
+                              <span className="inline-flex items-center rounded-full bg-[#288132]/10 px-2.5 py-0.5 text-sm font-medium text-[#288132]">
+                                carbs
+                              </span>
+                              <span className="inline-flex items-center rounded-full bg-[#288132]/10 px-2.5 py-0.5 text-sm font-medium text-[#288132]">
+                                protein
+                              </span>
+                              <span className="inline-flex items-center rounded-full bg-[#288132]/10 px-2.5 py-0.5 text-sm font-medium text-[#288132]">
+                                fat
+                              </span>
+                              <span className="inline-flex items-center rounded-full bg-[#288132]/10 px-2.5 py-0.5 text-sm font-medium text-[#288132]">
+                                calories
+                              </span>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
