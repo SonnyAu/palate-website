@@ -1,5 +1,6 @@
 "use client"
 
+import { useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import {
@@ -22,12 +23,18 @@ import { WavyGradientBackground } from "@/components/animations/wavy-gradient-ba
 import { MainNav } from "@/components/main-nav"
 
 export default function ScoringPage() {
+  // Add this useEffect to scroll to top when the page loads
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
   return (
     <div className="flex min-h-screen flex-col">
       <MainNav />
       <main className="flex-1">
         <section className="relative w-full overflow-hidden py-12 md:py-24">
-          <WavyGradientBackground baseColor="#FFEBB5" />
+          <WavyGradientBackground baseColor="#FFD8B5" />{" "}
+          {/* Changed from "#FFEBB5" */}
           <FloatingShape
             type="blob"
             size={300}
@@ -133,7 +140,7 @@ export default function ScoringPage() {
                       <div className="mt-6 w-full max-w-[1100px]">
                         <div className="grid auto-rows-fr grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
                           {/* Religious Dietary Tags */}
-                          <div className="rounded-lg border border-[#FFE1A8] bg-[#FFE1A8]/10 p-4">
+                          <div className="rounded-lg border border-[#FFD8B5] bg-[#FFD8B5]/10 p-4">
                             <div className="mb-3 flex items-center">
                               <Shield className="mr-2 size-5 text-[#288132]" />
                               <h4 className="font-semibold text-[#3f301d]">
@@ -151,7 +158,7 @@ export default function ScoringPage() {
                           </div>
 
                           {/* Meat Types Tags */}
-                          <div className="rounded-lg border border-[#FFE1A8] bg-[#FFE1A8]/10 p-4">
+                          <div className="rounded-lg border border-[#FFD8B5] bg-[#FFD8B5]/10 p-4">
                             <div className="mb-3 flex items-center">
                               <Utensils className="mr-2 size-5 text-[#288132]" />
                               <h4 className="font-semibold text-[#3f301d]">
@@ -178,7 +185,7 @@ export default function ScoringPage() {
                           </div>
 
                           {/* Animal Products Tags */}
-                          <div className="rounded-lg border border-[#FFE1A8] bg-[#FFE1A8]/10 p-4">
+                          <div className="rounded-lg border border-[#FFD8B5] bg-[#FFD8B5]/10 p-4">
                             <div className="mb-3 flex items-center">
                               <Egg className="mr-2 size-5 text-[#288132]" />
                               <h4 className="font-semibold text-[#3f301d]">
@@ -205,7 +212,7 @@ export default function ScoringPage() {
                           </div>
 
                           {/* Allergens Tags */}
-                          <div className="rounded-lg border border-[#FFE1A8] bg-[#FFE1A8]/10 p-4">
+                          <div className="rounded-lg border border-[#FFD8B5] bg-[#FFD8B5]/10 p-4">
                             <div className="mb-3 flex items-center">
                               <Wheat className="mr-2 size-5 text-[#288132]" />
                               <h4 className="font-semibold text-[#3f301d]">
@@ -235,7 +242,7 @@ export default function ScoringPage() {
                           </div>
 
                           {/* Diet Types Tags */}
-                          <div className="rounded-lg border border-[#FFE1A8] bg-[#FFE1A8]/10 p-4 lg:col-start-2">
+                          <div className="rounded-lg border border-[#FFD8B5] bg-[#FFD8B5]/10 p-4 lg:col-start-2">
                             <div className="mb-3 flex items-center">
                               <Leaf className="mr-2 size-5 text-[#288132]" />
                               <h4 className="font-semibold text-[#3f301d]">
@@ -250,7 +257,7 @@ export default function ScoringPage() {
                           </div>
 
                           {/* Nutritional Tags */}
-                          <div className="rounded-lg border border-[#FFE1A8] bg-[#FFE1A8]/10 p-4 lg:col-start-3">
+                          <div className="rounded-lg border border-[#FFD8B5] bg-[#FFD8B5]/10 p-4 lg:col-start-3">
                             <div className="mb-3 flex items-center">
                               <BarChart3 className="mr-2 size-5 text-[#288132]" />
                               <h4 className="font-semibold text-[#3f301d]">

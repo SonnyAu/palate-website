@@ -268,8 +268,8 @@ export default function ContactPage() {
       <MainNav />
       <main className="flex-1">
         <section className="relative w-full overflow-hidden py-12 md:py-24 lg:py-32">
-          <WavyGradientBackground baseColor="#FFEBB5" />{" "}
-          {/* Using warm pastel gold for contact page */}
+          <WavyGradientBackground baseColor="#FFD8B5" />{" "}
+          {/* Changed from "#FFEBB5" */}
           <FloatingShape
             type="blob"
             size={300}
@@ -530,15 +530,28 @@ export default function ContactPage() {
                       <Mail className="mt-1 size-5 text-[#288132]" />
                       <div>
                         <h4 className="font-medium text-[#3f301d]">Email</h4>
-                        <p className="text-[#27292A]">info@pal-ate.app</p>
+                        <p className="text-[#27292A]">support@palate.app</p>
+                        <p className="text-[#27292A]">
+                          partnerships@palate.app
+                        </p>
                       </div>
                     </div>
                     <div className="flex items-start gap-3">
                       <Phone className="mt-1 size-5 text-[#288132]" />
                       <div>
                         <h4 className="font-medium text-[#3f301d]">Phone</h4>
-                        <p className="text-[#27292A]">(949) 562-5265</p>
+                        <p className="text-[#27292A]">(555) 123-4567</p>
                         <p className="text-[#27292A]">Mon-Fri, 9am-5pm EST</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <MapPin className="mt-1 size-5 text-[#288132]" />
+                      <div>
+                        <h4 className="font-medium text-[#3f301d]">Office</h4>
+                        <p className="text-[#27292A]">123 Foodie Lane</p>
+                        <p className="text-[#27292A]">
+                          San Francisco, CA 94103
+                        </p>
                       </div>
                     </div>
 

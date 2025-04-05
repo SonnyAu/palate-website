@@ -1,7 +1,7 @@
 "use client"
 
 import type React from "react"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
@@ -17,6 +17,11 @@ export function MainNav() {
   const router = useRouter()
   const isHomePage = pathname === "/"
 
+  // Ref to track if we're currently doing a programmatic scroll
+  const isProgrammaticScrolling = useRef(false)
+  // Timeout ref for debouncing scroll events
+  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+
   // Handle scroll for shadow effect and active section highlighting
   useEffect(() => {
     const handleScroll = () => {
@@ -27,32 +32,75 @@ export function MainNav() {
         setScrolled(false)
       }
 
+      // Skip section detection if we're in the middle of a programmatic scroll
+      if (isProgrammaticScrolling.current) return
+
       // Only track active section on home page
       if (isHomePage) {
-        // Determine active section
-        const sections = ["features", "diets", "about", "api", "contact"]
-        const scrollPosition = window.scrollY + 100 // Offset for header
+        // Clear any existing timeout to debounce scroll events
+        if (scrollTimeoutRef.current) {
+          clearTimeout(scrollTimeoutRef.current)
+        }
 
-        for (const section of sections) {
-          const element = document.getElementById(section)
-          if (element) {
-            const offsetTop = element.offsetTop
-            const offsetHeight = element.offsetHeight
+        // Set a new timeout to update the active section after scrolling stops
+        scrollTimeoutRef.current = setTimeout(() => {
+          // Determine active section
+          const sections = [
+            "features",
+            "diets",
+            "party",
+            "about",
+            "api",
+            "contact",
+          ]
+          const scrollPosition = window.scrollY + 100 // Offset for header
 
-            if (
-              scrollPosition >= offsetTop &&
-              scrollPosition < offsetTop + offsetHeight
-            ) {
-              setActiveSection(section)
-              break
+          // First check if we're in the party section specifically
+          const dietsElement = document.getElementById("diets")
+          const partyMarker = document.getElementById("party")
+
+          if (dietsElement && partyMarker) {
+            const dietsHeight = dietsElement.offsetHeight
+            const dietsTop = dietsElement.offsetTop
+            const scrollProgress = (scrollPosition - dietsTop) / dietsHeight
+
+            // If we're more than 50% through the diets section, activate the party section
+            if (scrollProgress > 0.5 && scrollProgress < 1.2) {
+              setActiveSection("party")
+              return // Exit early if we've determined we're in the party section
             }
           }
-        }
+
+          // For all other sections, use standard detection
+          for (const section of sections) {
+            // Skip party section as we've already handled it specially above
+            if (section === "party") continue
+
+            const element = document.getElementById(section)
+            if (element) {
+              const offsetTop = element.offsetTop
+              const offsetHeight = element.offsetHeight
+
+              if (
+                scrollPosition >= offsetTop &&
+                scrollPosition < offsetTop + offsetHeight
+              ) {
+                setActiveSection(section)
+                break
+              }
+            }
+          }
+        }, 50) // Small delay to debounce scroll events
       }
     }
 
     window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
+    return () => {
+      window.removeEventListener("scroll", handleScroll)
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current)
+      }
+    }
   }, [isHomePage])
 
   // Handle window resize to close mobile menu when switching to desktop
@@ -99,6 +147,9 @@ export function MainNav() {
       setIsMenuOpen(false)
     }
 
+    // Set active section immediately to avoid flicker
+    setActiveSection(sectionId)
+
     // If we're on the home page, scroll to the section
     if (isHomePage) {
       const section = document.getElementById(sectionId)
@@ -109,14 +160,19 @@ export function MainNav() {
         // Calculate position accounting for navbar height
         const sectionPosition = section.offsetTop - navbarHeight
 
+        // Set flag to prevent scroll handler from changing active section during programmatic scroll
+        isProgrammaticScrolling.current = true
+
         // Smooth scroll to section
         window.scrollTo({
           top: sectionPosition,
           behavior: "smooth",
         })
 
-        // Update active section
-        setActiveSection(sectionId)
+        // Reset the flag after the scroll animation is likely to be complete
+        setTimeout(() => {
+          isProgrammaticScrolling.current = false
+        }, 1000) // 1 second should cover most scroll animations
       }
     } else {
       // If we're on another page, navigate to home page with the section hash
@@ -128,6 +184,7 @@ export function MainNav() {
   const navLinks = [
     { href: "#features", id: "features", label: "Features" },
     { href: "#diets", id: "diets", label: "Supported Diets" },
+    { href: "#party", id: "party", label: "Party System" },
     { href: "#about", id: "about", label: "About Us" },
     { href: "#api", id: "api", label: "API" },
   ]
@@ -165,7 +222,7 @@ export function MainNav() {
 
           {/* Nav Links - Center section with flex-grow */}
           <nav
-            className="hidden grow items-center justify-center px-4 lg:flex"
+            className="hidden grow items-center justify-center px-4 xl:flex"
             aria-label="Main navigation"
           >
             <ul
@@ -173,7 +230,7 @@ export function MainNav() {
               role="menubar"
             >
               {navLinks.map((link) => (
-                <li key={link.id} className="shrink-0" role="none">
+                <li key={link.id} className="relative shrink-0" role="none">
                   <a
                     href={link.href}
                     onClick={(e) => handleNavClick(e, link.id)}
@@ -188,9 +245,15 @@ export function MainNav() {
                     }
                   >
                     {link.label}
-                    {activeSection === link.id && isHomePage && (
-                      <span
+                    {isHomePage && (
+                      <motion.span
                         className="absolute -bottom-1 left-1/2 size-2 -translate-x-1/2 rounded-full bg-[#288132]"
+                        initial={{ opacity: 0, scale: 0 }}
+                        animate={{
+                          opacity: activeSection === link.id ? 1 : 0,
+                          scale: activeSection === link.id ? 1 : 0,
+                        }}
+                        transition={{ duration: 0.2, ease: "easeInOut" }}
                         aria-hidden="true"
                       />
                     )}
@@ -203,7 +266,7 @@ export function MainNav() {
           {/* Action Buttons or Hamburger - Right section with fixed width */}
           <div className="flex shrink-0 items-center justify-end pl-4 md:pl-6 lg:pl-8">
             {/* Mobile/tablet hamburger button - show on medium screens and below */}
-            <div className="lg:hidden">
+            <div className="xl:hidden">
               <Button
                 variant="ghost"
                 size="icon"
@@ -211,7 +274,7 @@ export function MainNav() {
                 aria-label={isMenuOpen ? "Close menu" : "Open menu"}
                 aria-expanded={isMenuOpen}
                 aria-controls="mobile-menu"
-                className="relative z-[10000] rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-[#288132]"
+                className="relative z-[10000] rounded-md hover:bg-[#FFD8B5] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#288132]"
               >
                 {isMenuOpen ? (
                   <X className="size-6" aria-hidden="true" />
@@ -222,7 +285,7 @@ export function MainNav() {
             </div>
 
             {/* Desktop buttons - only show on large screens */}
-            <div className="hidden items-center space-x-3 lg:flex">
+            <div className="hidden items-center space-x-3 xl:flex">
               <span
                 className="inline-flex cursor-default items-center justify-center whitespace-nowrap rounded-md bg-[#288132] px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-[#288132]/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#288132] focus-visible:ring-offset-2 xl:px-5 xl:text-base"
                 aria-label="PalAte app coming soon"
@@ -247,7 +310,7 @@ export function MainNav() {
           <div
             className="fixed left-0 top-0 z-[9999] h-[100vh] w-[100vw]"
             style={{
-              backgroundColor: "#FFF8E8",
+              backgroundColor: "#FFD8B5",
               opacity: 1,
             }}
           >
@@ -272,7 +335,7 @@ export function MainNav() {
                       key={link.id}
                       href={link.href}
                       onClick={(e) => handleNavClick(e, link.id)}
-                      className={`rounded-md px-4 py-3 text-center text-xl font-medium hover:bg-[#FFE1A8]/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#288132] ${
+                      className={`relative rounded-md px-4 py-3 text-center text-xl font-medium hover:bg-[#FFD8B5]/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#288132] ${
                         activeSection === link.id && isHomePage
                           ? "text-[#288132]"
                           : "text-[#27292A] hover:text-[#288132]"
@@ -283,8 +346,11 @@ export function MainNav() {
                     >
                       {link.label}
                       {activeSection === link.id && isHomePage && (
-                        <span
-                          className="ml-2 inline-block size-2 rounded-full bg-[#288132]"
+                        <motion.span
+                          className="absolute -bottom-1 left-1/2 size-2 -translate-x-1/2 rounded-full bg-[#288132]"
+                          initial={{ opacity: 0, scale: 0 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          transition={{ duration: 0.2 }}
                           aria-hidden="true"
                         />
                       )}

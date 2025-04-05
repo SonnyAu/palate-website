@@ -46,7 +46,7 @@ headers: {
       <MainNav />
       <main className="flex-1">
         <section className="relative w-full overflow-hidden py-12 md:py-24 lg:py-32">
-          <WavyGradientBackground />
+          <WavyGradientBackground baseColor="#FFD8B5" />
           <FloatingShape
             type="blob"
             size={300}
@@ -157,7 +157,7 @@ headers: {
             <div className="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-3 lg:gap-12">
               <MotionSection
                 delay={0.2}
-                className="flex h-full flex-col justify-between rounded-lg border border-[#FFE1A8] bg-[#FFE1A8]/70 p-6 shadow-lg transition-shadow duration-300 hover:shadow-xl"
+                className="flex h-full flex-col justify-between rounded-lg border border-[#FFD8B5] bg-[#FFD8B5]/70 p-6 shadow-lg transition-shadow duration-300 hover:shadow-xl"
               >
                 <div>
                   <div className="flex size-12 items-center justify-center rounded-full bg-[#288132] text-white">
@@ -176,7 +176,7 @@ headers: {
               </MotionSection>
               <MotionSection
                 delay={0.3}
-                className="flex h-full flex-col justify-between rounded-lg border border-[#FFE1A8] bg-[#FFE1A8]/70 p-6 shadow-lg transition-shadow duration-300 hover:shadow-xl"
+                className="flex h-full flex-col justify-between rounded-lg border border-[#FFD8B5] bg-[#FFD8B5]/70 p-6 shadow-lg transition-shadow duration-300 hover:shadow-xl"
               >
                 <div>
                   <div className="flex size-12 items-center justify-center rounded-full bg-[#288132] text-white">
@@ -195,7 +195,7 @@ headers: {
               </MotionSection>
               <MotionSection
                 delay={0.4}
-                className="flex h-full flex-col justify-between rounded-lg border border-[#FFE1A8] bg-[#FFE1A8]/70 p-6 shadow-lg transition-shadow duration-300 hover:shadow-xl"
+                className="flex h-full flex-col justify-between rounded-lg border border-[#FFD8B5] bg-[#FFD8B5]/70 p-6 shadow-lg transition-shadow duration-300 hover:shadow-xl"
               >
                 <div>
                   <div className="flex size-12 items-center justify-center rounded-full bg-[#288132] text-white">
@@ -218,46 +218,51 @@ headers: {
         </section>
 
         {/* Scroll transition section for Dietary Preferences and Party System */}
-        <ScrollTransitionSection
-          preferencesScreen={{
-            image: "/preferences-screen.png",
-            tag: "Dietary Preferences",
-            title: "Tailored to Your Diet",
-            description:
-              "Choose your dietary preferences and we'll find restaurants that match your specific needs, whether you're vegan, gluten-free, or have religious dietary requirements.",
-            features: [
-              {
-                title: "Choose Your Dietary Preferences",
-                description:
-                  "Select from a wide range of dietary options including vegan, keto, halal, kosher, and more.",
-              },
-              {
-                title: "Automatic Restaurant Scoring",
-                description:
-                  "Restaurants are automatically scored based on how well they match your specific dietary needs.",
-              },
-            ],
-          }}
-          partyScreen={{
-            image: "/party.jpg",
-            tag: "Party System",
-            title: "Dine Together, Eat Right",
-            description:
-              "Create a party, share your dietary needs, and get group-friendly restaurant suggestions that match everyone's preferences.",
-            features: [
-              {
-                title: "Invite Friends to Your Party",
-                description:
-                  "Easily invite friends and family to join your dining party with just a few taps.",
-              },
-              {
-                title: "Smart Group Recommendations",
-                description:
-                  "Our app automatically scores and recommends restaurants based on the party's combined preferences.",
-              },
-            ],
-          }}
-        />
+        <section id="diets">
+          <ScrollTransitionSection
+            preferencesScreen={{
+              image: "/preferences-screen.png",
+              tag: "Dietary Preferences",
+              title: "Tailored to Your Diet",
+              description:
+                "Choose your dietary preferences and we'll find restaurants that match your specific needs, whether you're vegan, gluten-free, or have religious dietary requirements.",
+              features: [
+                {
+                  title: "Choose Your Dietary Preferences",
+                  description:
+                    "Select from a wide range of dietary options including vegan, keto, halal, kosher, and more.",
+                },
+                {
+                  title: "Automatic Restaurant Scoring",
+                  description:
+                    "Restaurants are automatically scored based on how well they match your specific dietary needs.",
+                },
+              ],
+            }}
+            partyScreen={{
+              image: "/party.jpg",
+              tag: "Party System",
+              title: "Dine Together, Eat Right",
+              description:
+                "Create a party, share your dietary needs, and get group-friendly restaurant suggestions that match everyone's preferences.",
+              features: [
+                {
+                  title: "Invite Friends to Your Party",
+                  description:
+                    "Easily invite friends and family to join your dining party with just a few taps.",
+                },
+                {
+                  title: "Smart Group Recommendations",
+                  description:
+                    "Our app automatically scores and recommends restaurants based on the party's combined preferences.",
+                },
+              ],
+            }}
+          />
+        </section>
+
+        {/* Add a new section ID for the party system */}
+        <div id="party" className="h-0 w-full"></div>
 
         <section id="about" className="relative w-full py-12 md:py-24 lg:py-32">
           <FloatingShape
@@ -323,7 +328,7 @@ headers: {
           id="api"
           className="relative w-full overflow-hidden py-12 md:py-24 lg:py-32"
         >
-          <WavyGradientBackground baseColor="#FFEEC2" />{" "}
+          <WavyGradientBackground baseColor="#FFD8B5" />{" "}
           {/* Using rich cream color for this section */}
           <FloatingShape
             type="circle"

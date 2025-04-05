@@ -16,7 +16,7 @@ export default function PrivacyPolicyPage() {
       <MainNav />
       <main className="flex-1">
         <section className="relative w-full overflow-hidden py-12 md:py-24">
-          <WavyGradientBackground baseColor="#FFEBB5" />
+          <WavyGradientBackground baseColor="#FFD8B5" />
           <FloatingShape
             type="blob"
             size={300}
