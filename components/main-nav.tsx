@@ -246,14 +246,20 @@ export function MainNav() {
                   >
                     {link.label}
                     {isHomePage && (
-                      <motion.span
-                        className="absolute -bottom-1 left-1/2 size-2 -translate-x-1/2 rounded-full bg-[#288132]"
-                        initial={{ opacity: 0, scale: 0 }}
+                      <motion.div
+                        className="absolute -bottom-1 h-0.5 bg-[#288132]"
+                        layoutId="navIndicator"
+                        initial={{ width: 0 }}
                         animate={{
-                          opacity: activeSection === link.id ? 1 : 0,
-                          scale: activeSection === link.id ? 1 : 0,
+                          width: activeSection === link.id ? "100%" : 0,
+                          opacity: 1,
                         }}
-                        transition={{ duration: 0.2, ease: "easeInOut" }}
+                        style={{
+                          left: 0,
+                          right: 0,
+                          originX: 0,
+                        }}
+                        transition={{ duration: 0.3, ease: "easeInOut" }}
                         aria-hidden="true"
                       />
                     )}
@@ -345,12 +351,21 @@ export function MainNav() {
                       }
                     >
                       {link.label}
-                      {activeSection === link.id && isHomePage && (
-                        <motion.span
-                          className="absolute -bottom-1 left-1/2 size-2 -translate-x-1/2 rounded-full bg-[#288132]"
-                          initial={{ opacity: 0, scale: 0 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          transition={{ duration: 0.2 }}
+                      {isHomePage && (
+                        <motion.div
+                          className="absolute -bottom-1 h-0.5 bg-[#288132]"
+                          layoutId="mobileNavIndicator"
+                          initial={{ width: 0 }}
+                          animate={{
+                            width: activeSection === link.id ? "100%" : 0,
+                            opacity: 1,
+                          }}
+                          style={{
+                            left: 0,
+                            right: 0,
+                            originX: 0,
+                          }}
+                          transition={{ duration: 0.3, ease: "easeInOut" }}
                           aria-hidden="true"
                         />
                       )}
