@@ -3,7 +3,18 @@
 import type React from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { Apple, ArrowRight, Database, Leaf, Lock, Utensils } from "lucide-react"
+import {
+  Apple,
+  ArrowRight,
+  BarChart3,
+  Database,
+  Filter,
+  Leaf,
+  Lock,
+  Star,
+  Users,
+  Utensils,
+} from "lucide-react"
 import { FloatingShape } from "@/components/animations/floating-shape"
 import { MotionButton } from "@/components/animations/motion-button"
 import { MotionHeading } from "@/components/animations/motion-heading"
@@ -157,33 +168,33 @@ headers: {
             <div className="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-3 lg:gap-12">
               <MotionSection
                 delay={0.2}
-                className="flex h-full flex-col justify-between rounded-lg border border-[#FFD8B5] bg-[#FFD8B5]/70 p-6 shadow-lg transition-shadow duration-300 hover:shadow-xl"
+                className="flex h-full flex-col justify-between rounded-lg border-2 border-[#288132] bg-[#F6FBF8] p-6"
               >
-                <div>
-                  <div className="flex size-12 items-center justify-center rounded-full bg-[#288132] text-white">
+                <div className="flex items-start">
+                  <div className="mr-3 mt-1 text-[#288132]">
                     <Leaf className="size-6" />
                   </div>
-                  <div className="mt-4 space-y-2">
-                    <h3 className="text-xl font-bold text-[#3f301d]">
+                  <div>
+                    <h3 className="mb-2 text-xl font-semibold text-[#3f301d]">
                       Choose Your Preferences
                     </h3>
                     <p className="text-[#27292A]">
                       Select from our curated list of dietary options including
-                      vegan, keto, halal, gluten-free, and many more.
+                      vegan, halal, gluten-free, and many more.
                     </p>
                   </div>
                 </div>
               </MotionSection>
               <MotionSection
                 delay={0.3}
-                className="flex h-full flex-col justify-between rounded-lg border border-[#FFD8B5] bg-[#FFD8B5]/70 p-6 shadow-lg transition-shadow duration-300 hover:shadow-xl"
+                className="flex h-full flex-col justify-between rounded-lg border-2 border-[#288132] bg-[#F6FBF8] p-6"
               >
-                <div>
-                  <div className="flex size-12 items-center justify-center rounded-full bg-[#288132] text-white">
+                <div className="flex items-start">
+                  <div className="mr-3 mt-1 text-[#288132]">
                     <Utensils className="size-6" />
                   </div>
-                  <div className="mt-4 space-y-2">
-                    <h3 className="text-xl font-bold text-[#3f301d]">
+                  <div>
+                    <h3 className="mb-2 text-xl font-semibold text-[#3f301d]">
                       Finds Restaurants
                     </h3>
                     <p className="text-[#27292A]">
@@ -195,14 +206,14 @@ headers: {
               </MotionSection>
               <MotionSection
                 delay={0.4}
-                className="flex h-full flex-col justify-between rounded-lg border border-[#FFD8B5] bg-[#FFD8B5]/70 p-6 shadow-lg transition-shadow duration-300 hover:shadow-xl"
+                className="flex h-full flex-col justify-between rounded-lg border-2 border-[#288132] bg-[#F6FBF8] p-6"
               >
-                <div>
-                  <div className="flex size-12 items-center justify-center rounded-full bg-[#288132] text-white">
+                <div className="flex items-start">
+                  <div className="mr-3 mt-1 text-[#288132]">
                     <Apple className="size-6" />
                   </div>
-                  <div className="mt-4 space-y-2">
-                    <h3 className="text-xl font-bold text-[#3f301d]">
+                  <div>
+                    <h3 className="mb-2 text-xl font-semibold text-[#3f301d]">
                       Personalized Results
                     </h3>
                     <p className="text-[#27292A]">
@@ -230,12 +241,14 @@ headers: {
                 {
                   title: "Choose Your Dietary Preferences",
                   description:
-                    "Select from a wide range of dietary options including vegan, keto, halal, kosher, and more.",
+                    "Select from a wide range of dietary options including vegan, halal, kosher, and more.",
+                  icon: <Filter className="size-5" />,
                 },
                 {
                   title: "Automatic Restaurant Scoring",
                   description:
                     "Restaurants are automatically scored based on how well they match your specific dietary needs.",
+                  icon: <BarChart3 className="size-5" />,
                 },
               ],
             }}
@@ -250,11 +263,13 @@ headers: {
                   title: "Invite Friends to Your Party",
                   description:
                     "Easily invite friends and family to join your dining party with just a few taps.",
+                  icon: <Users className="size-5" />,
                 },
                 {
                   title: "Smart Group Recommendations",
                   description:
                     "Our app automatically scores and recommends restaurants based on the party's combined preferences.",
+                  icon: <Star className="size-5" />,
                 },
               ],
             }}
@@ -360,37 +375,67 @@ headers: {
               </MotionSection>
               <MotionSection>
                 <div className="space-y-4">
-                  <div className="inline-block rounded-lg bg-[#288132] px-3 py-1 text-sm text-white">
+                  <div className="inline-block rounded-lg bg-[#288132] px-3 py-1 text-xs text-white sm:text-sm">
                     For Developers
                   </div>
-                  <MotionHeading className="text-3xl font-bold tracking-tighter text-[#3f301d] sm:text-4xl md:text-5xl">
+                  <MotionHeading className="text-2xl font-bold tracking-tighter text-[#3f301d] sm:text-3xl md:text-4xl lg:text-5xl">
                     PalAte API
                   </MotionHeading>
                   <MotionParagraph
-                    className="text-[#27292A] md:text-xl"
+                    className="text-sm text-[#27292A] sm:text-base md:text-lg lg:text-xl"
                     delay={0.1}
                   >
                     Integrate our powerful restaurant recommendation engine into
                     your own applications.
                   </MotionParagraph>
-                  <ul className="space-y-2 text-[#27292A]">
-                    <li className="flex items-center gap-2">
-                      <Database className="size-5 text-[#288132]" />
-                      <span>
-                        Access our database of diet-friendly restaurants
-                      </span>
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <Utensils className="size-5 text-[#288132]" />
-                      <span>
-                        Get detailed menu information with dietary flags
-                      </span>
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <Lock className="size-5 text-[#288132]" />
-                      <span>Secure, reliable, and scalable infrastructure</span>
-                    </li>
-                  </ul>
+
+                  <div className="space-y-3">
+                    <div className="rounded-lg border-2 border-[#288132] bg-[#F6FBF8] p-3 md:p-4">
+                      <div className="flex items-start">
+                        <Database className="mr-3 mt-1 size-5 text-[#288132]" />
+                        <div>
+                          <h3 className="mb-1 font-semibold text-[#3f301d]">
+                            Access our database of diet-friendly restaurants
+                          </h3>
+                          <p className="text-sm text-[#27292A]">
+                            Get detailed information about restaurants that
+                            cater to specific dietary needs.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="rounded-lg border-2 border-[#288132] bg-[#F6FBF8] p-3 md:p-4">
+                      <div className="flex items-start">
+                        <Utensils className="mr-3 mt-1 size-5 text-[#288132]" />
+                        <div>
+                          <h3 className="mb-1 font-semibold text-[#3f301d]">
+                            Get detailed menu information with dietary flags
+                          </h3>
+                          <p className="text-sm text-[#27292A]">
+                            Access comprehensive menu data with dietary
+                            restriction indicators.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="rounded-lg border-2 border-[#288132] bg-[#F6FBF8] p-3 md:p-4">
+                      <div className="flex items-start">
+                        <Lock className="mr-3 mt-1 size-5 text-[#288132]" />
+                        <div>
+                          <h3 className="mb-1 font-semibold text-[#3f301d]">
+                            Secure, reliable, and scalable infrastructure
+                          </h3>
+                          <p className="text-sm text-[#27292A]">
+                            Built on enterprise-grade technology to ensure high
+                            availability and performance.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                   <div className="flex flex-col items-start">
                     <MotionButton
                       className="cursor-default bg-[#288132] text-white hover:bg-[#288132]/90"

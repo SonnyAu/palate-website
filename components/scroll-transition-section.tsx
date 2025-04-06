@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { motion, useScroll, useTransform } from "framer-motion"
+import { CheckCircle, Shield } from "lucide-react"
 import { FloatingShape } from "@/components/animations/floating-shape"
 import { WavyGradientBackground } from "@/components/animations/wavy-gradient-background"
 
@@ -19,6 +20,7 @@ interface ScrollTransitionSectionProps {
     features: Array<{
       title: string
       description: string
+      icon?: React.ReactNode
     }>
   }
   partyScreen: {
@@ -29,6 +31,7 @@ interface ScrollTransitionSectionProps {
     features: Array<{
       title: string
       description: string
+      icon?: React.ReactNode
     }>
   }
 }
@@ -41,6 +44,7 @@ export function ScrollTransitionSection({
 }: ScrollTransitionSectionProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const [containerHeight, setContainerHeight] = useState(0)
+  const [isMobile, setIsMobile] = useState(false)
 
   // Set up scroll animations
   const { scrollYProgress } = useScroll({
@@ -56,22 +60,43 @@ export function ScrollTransitionSection({
   )
   const partyOpacity = useTransform(scrollYProgress, [0.4, 0.6, 1], [0, 1, 1])
 
-  // Calculate container height based on viewport
-  useEffect(() => {
-    // Set container height to 2x viewport height to ensure enough scroll space
-    setContainerHeight(window.innerHeight * 2)
+  // Transform values for slide-in animations
+  const preferenceY = useTransform(scrollYProgress, [0, 0.4, 0.6], [0, 0, -50])
+  const partyY = useTransform(scrollYProgress, [0.4, 0.6, 1], [50, 0, 0])
 
-    const handleResize = () => {
-      setContainerHeight(window.innerHeight * 2)
+  // Calculate container height based on viewport and check for mobile
+  useEffect(() => {
+    const updateSizes = () => {
+      // Check if mobile
+      setIsMobile(window.innerWidth < 768)
+
+      // Set container height - adjust based on screen size for smoother scrolling
+      let height
+      if (window.innerWidth < 640) {
+        // For small screens, consider both width and height
+        if (window.innerHeight > 800) {
+          height = window.innerHeight * 2.6 // Extra height for tall mobile screens
+        } else {
+          height = window.innerHeight * 2.4 // Extra height on small mobile
+        }
+      } else if (window.innerWidth < 768) {
+        height = window.innerHeight * 2.2 // More height on mobile
+      } else if (window.innerWidth < 1024) {
+        height = window.innerHeight * 2.1 // Slightly more on tablets
+      } else {
+        height = window.innerHeight * 2 // Default for desktop
+      }
+
+      setContainerHeight(height)
     }
 
-    window.addEventListener("resize", handleResize)
-    return () => window.removeEventListener("resize", handleResize)
+    updateSizes()
+    window.addEventListener("resize", updateSizes)
+    return () => window.removeEventListener("resize", updateSizes)
   }, [])
 
-  // Add this after the existing useEffect
+  // Position the party section marker
   useEffect(() => {
-    // Position the party section marker at the right spot
     const updatePartyMarker = () => {
       const partyMarker = document.getElementById("party")
       const container = containerRef.current
@@ -123,15 +148,18 @@ export function ScrollTransitionSection({
         />
 
         <div className="container mx-auto flex h-full items-center justify-center px-4 py-8">
-          <div className="mx-auto flex w-full max-w-5xl items-center justify-between">
-            {/* Phone container - fixed on the left, properly sized */}
-            <div className="flex w-[30%] min-w-[200px] max-w-[280px] items-center justify-center">
+          <div className="mx-auto flex w-full max-w-5xl flex-col items-center justify-between md:flex-row">
+            {/* Phone container - responsive sizing */}
+            <div className="mb-8 flex w-full min-w-[140px] max-w-[180px] items-center justify-center sm:max-w-[240px] md:mb-0 md:w-[30%] lg:max-w-[280px] xl:max-w-[320px]">
               <div className="relative aspect-[9/19.5] w-full overflow-hidden rounded-[40px] bg-black shadow-xl">
                 <div className="absolute inset-[3px] overflow-hidden rounded-[36px] bg-black">
                   {/* First screen - Dietary Preferences */}
                   <motion.div
                     className="absolute inset-0"
-                    style={{ opacity: preferenceOpacity }}
+                    style={{
+                      opacity: preferenceOpacity,
+                      y: preferenceY,
+                    }}
                   >
                     <Image
                       src={preferencesScreen.image || "/placeholder.svg"}
@@ -139,7 +167,7 @@ export function ScrollTransitionSection({
                       fill
                       className="object-cover"
                       style={{ objectPosition: "top center" }}
-                      sizes="(max-width: 640px) 200px, (max-width: 768px) 220px, 280px"
+                      sizes="(max-width: 640px) 180px, (max-width: 768px) 220px, (max-width: 1280px) 240px, 320px"
                       priority
                     />
                   </motion.div>
@@ -147,7 +175,10 @@ export function ScrollTransitionSection({
                   {/* Second screen - Party System */}
                   <motion.div
                     className="absolute inset-0"
-                    style={{ opacity: partyOpacity }}
+                    style={{
+                      opacity: partyOpacity,
+                      y: partyY,
+                    }}
                   >
                     <Image
                       src={partyScreen.image || "/placeholder.svg"}
@@ -155,7 +186,7 @@ export function ScrollTransitionSection({
                       fill
                       className="object-cover"
                       style={{ objectPosition: "center center" }}
-                      sizes="(max-width: 640px) 200px, (max-width: 768px) 220px, 280px"
+                      sizes="(max-width: 640px) 180px, (max-width: 768px) 220px, (max-width: 1280px) 240px, 320px"
                       priority
                     />
                   </motion.div>
@@ -163,8 +194,8 @@ export function ScrollTransitionSection({
               </div>
             </div>
 
-            {/* Description container - scrolls with page, always on the right */}
-            <div className="h-full w-[70%] overflow-y-auto pl-6">
+            {/* Description container - responsive layout */}
+            <div className="h-full w-full overflow-y-auto md:w-[70%] md:pl-6">
               <div
                 className="flex h-full flex-col justify-center"
                 style={{ position: "relative" }}
@@ -180,10 +211,10 @@ export function ScrollTransitionSection({
                   <div className="mb-1 inline-block w-auto max-w-fit whitespace-nowrap rounded-lg bg-[#288132] px-2 py-1 text-xs text-white">
                     {preferencesScreen.tag}
                   </div>
-                  <h2 className="mb-3 text-2xl font-bold tracking-tighter text-[#3f301d] sm:text-3xl">
+                  <h2 className="mb-2 text-xl font-bold tracking-tighter text-[#3f301d] sm:mb-3 sm:text-2xl md:mb-3 md:text-2xl lg:text-3xl">
                     {preferencesScreen.title}
                   </h2>
-                  <div className="mb-4 max-w-[600px] text-sm text-[#27292A] md:text-base">
+                  <div className="mb-4 max-w-[600px] text-sm text-[#27292A] sm:text-base md:mb-4 md:text-base">
                     {preferencesScreen.description}{" "}
                     <Link
                       href="/scoring"
@@ -193,18 +224,25 @@ export function ScrollTransitionSection({
                     </Link>
                   </div>
 
-                  <div className="mt-2 flex flex-wrap justify-start gap-3">
+                  <div className="mt-3 hidden flex-wrap justify-start gap-3 sm:flex md:gap-4">
                     {preferencesScreen.features.map((feature, index) => (
                       <div
                         key={index}
-                        className="min-w-[200px] max-w-[275px] flex-1 rounded-lg bg-white p-4 shadow-md"
+                        className="feature-card min-w-[150px] max-w-full flex-1 rounded-lg border-2 border-[#288132] bg-[#F6FBF8] p-3 md:min-w-[200px] md:max-w-[275px] md:p-4"
                       >
-                        <h3 className="mb-1 font-semibold text-[#3f301d]">
-                          {feature.title}
-                        </h3>
-                        <p className="text-sm text-[#27292A]">
-                          {feature.description}
-                        </p>
+                        <div className="flex items-start">
+                          <div className="mr-3 mt-1 text-[#288132]">
+                            {feature.icon || <CheckCircle className="size-5" />}
+                          </div>
+                          <div>
+                            <h3 className="mb-1 text-xs font-semibold text-[#3f301d] sm:text-sm md:text-base">
+                              {feature.title}
+                            </h3>
+                            <p className="text-xs text-[#27292A] md:text-sm">
+                              {feature.description}
+                            </p>
+                          </div>
+                        </div>
                       </div>
                     ))}
                   </div>
@@ -221,25 +259,32 @@ export function ScrollTransitionSection({
                   <div className="mb-1 inline-block w-auto max-w-fit whitespace-nowrap rounded-lg bg-[#288132] px-2 py-1 text-xs text-white">
                     {partyScreen.tag}
                   </div>
-                  <h2 className="mb-3 text-2xl font-bold tracking-tighter text-[#3f301d] sm:text-3xl">
+                  <h2 className="mb-2 text-xl font-bold tracking-tighter text-[#3f301d] sm:mb-3 sm:text-2xl md:mb-3 md:text-2xl lg:text-3xl">
                     {partyScreen.title}
                   </h2>
-                  <div className="mb-4 max-w-[600px] text-sm text-[#27292A] md:text-base">
+                  <div className="mb-4 max-w-[600px] text-sm text-[#27292A] sm:text-base md:mb-4 md:text-base">
                     {partyScreen.description}
                   </div>
 
-                  <div className="mt-2 flex flex-wrap justify-start gap-3">
+                  <div className="mt-3 hidden flex-wrap justify-start gap-3 sm:flex md:gap-4">
                     {partyScreen.features.map((feature, index) => (
                       <div
                         key={index}
-                        className="min-w-[200px] max-w-[275px] flex-1 rounded-lg bg-white p-4 shadow-md"
+                        className="feature-card min-w-[150px] max-w-full flex-1 rounded-lg border-2 border-[#288132] bg-[#F6FBF8] p-3 md:min-w-[200px] md:max-w-[275px] md:p-4"
                       >
-                        <h3 className="mb-1 font-semibold text-[#3f301d]">
-                          {feature.title}
-                        </h3>
-                        <p className="text-sm text-[#27292A]">
-                          {feature.description}
-                        </p>
+                        <div className="flex items-start">
+                          <div className="mr-3 mt-1 text-[#288132]">
+                            {feature.icon || <Shield className="size-5" />}
+                          </div>
+                          <div>
+                            <h3 className="mb-1 text-xs font-semibold text-[#3f301d] sm:text-sm md:text-base">
+                              {feature.title}
+                            </h3>
+                            <p className="text-xs text-[#27292A] md:text-sm">
+                              {feature.description}
+                            </p>
+                          </div>
+                        </div>
                       </div>
                     ))}
                   </div>
