@@ -568,7 +568,7 @@
     }
 
     /* Increase tag size */
-    .scroll-transition-section .rounded-lg.bg-\[#288132\] {
+    \ .scroll-transition-section .rounded-lg.bg-\[#288132\] {
       font-size: 0.875rem;
       padding: 0.25rem 0.5rem;
       margin-bottom: 0.75rem;
@@ -581,5 +581,44 @@
   .scroll-transition-section .w-full.md\:w-\[70\%\] > div {
     padding-top: 1rem;
     padding-bottom: 1rem;
+  }
+}
+
+/* Responsive styles for TypewriterCode component */
+@media (max-width: 640px) {
+  .typewriter-code pre {
+    font-size: 0.75rem;
+    line-height: 1.2;
+  }
+
+  .typewriter-code {
+    padding: 0.75rem;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+}
+
+/* Responsive styles for API feature cards */
+@media (max-width: 640px) {
+  #api .border-2 {
+    padding: 0.5rem 0.75rem;
+  }
+
+  #api h3 {
+    font-size: 0.875rem;
+    margin-bottom: 0.25rem;
+  }
+
+  #api p {
+    font-size: 0.75rem;
+  }
+
+  #api .mr-3 {
+    margin-right: 0.5rem;
+  }
+
+  #api .size-5 {
+    width: 1rem;
+    height: 1rem;
   }
 }

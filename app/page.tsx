@@ -43,11 +43,11 @@ export default function Home() {
   }
 
   const apiCodeExample = `fetch("https://api.example.com/v1/restaurants", {
-method: "GET",
-headers: {
-"Authorization": "Bearer YOUR_API_KEY",
-"Content-Type": "application/json"
-}
+  method: "GET",
+  headers: {
+    "Authorization": "Bearer YOUR_API_KEY",
+    "Content-Type": "application/json"
+  }
 })
 .then(response => response.json())
 .then(data => console.log(data));`
@@ -371,6 +371,9 @@ headers: {
                   code={apiCodeExample}
                   typingSpeed={25}
                   showLineNumbers={true}
+                  loop={true}
+                  pauseBetweenLoops={4000}
+                  className="max-w-full overflow-x-auto text-xs sm:text-sm"
                 />
               </MotionSection>
               <MotionSection>
@@ -389,15 +392,15 @@ headers: {
                     your own applications.
                   </MotionParagraph>
 
-                  <div className="space-y-3">
-                    <div className="rounded-lg border-2 border-[#288132] bg-[#F6FBF8] p-3 md:p-4">
+                  <div className="space-y-2 sm:space-y-3">
+                    <div className="rounded-lg border-2 border-[#288132] bg-[#F6FBF8] p-2 sm:p-3 md:p-4">
                       <div className="flex items-start">
-                        <Database className="mr-3 mt-1 size-5 text-[#288132]" />
+                        <Database className="mr-2 mt-1 size-4 text-[#288132] sm:mr-3 sm:size-5" />
                         <div>
-                          <h3 className="mb-1 font-semibold text-[#3f301d]">
+                          <h3 className="mb-0.5 text-sm font-semibold text-[#3f301d] sm:mb-1 sm:text-base">
                             Access our database of diet-friendly restaurants
                           </h3>
-                          <p className="text-sm text-[#27292A]">
+                          <p className="text-xs text-[#27292A] sm:text-sm">
                             Get detailed information about restaurants that
                             cater to specific dietary needs.
                           </p>
@@ -405,14 +408,14 @@ headers: {
                       </div>
                     </div>
 
-                    <div className="rounded-lg border-2 border-[#288132] bg-[#F6FBF8] p-3 md:p-4">
+                    <div className="rounded-lg border-2 border-[#288132] bg-[#F6FBF8] p-2 sm:p-3 md:p-4">
                       <div className="flex items-start">
-                        <Utensils className="mr-3 mt-1 size-5 text-[#288132]" />
+                        <Utensils className="mr-2 mt-1 size-4 text-[#288132] sm:mr-3 sm:size-5" />
                         <div>
-                          <h3 className="mb-1 font-semibold text-[#3f301d]">
+                          <h3 className="mb-0.5 text-sm font-semibold text-[#3f301d] sm:mb-1 sm:text-base">
                             Get detailed menu information with dietary flags
                           </h3>
-                          <p className="text-sm text-[#27292A]">
+                          <p className="text-xs text-[#27292A] sm:text-sm">
                             Access comprehensive menu data with dietary
                             restriction indicators.
                           </p>
@@ -420,14 +423,14 @@ headers: {
                       </div>
                     </div>
 
-                    <div className="rounded-lg border-2 border-[#288132] bg-[#F6FBF8] p-3 md:p-4">
+                    <div className="rounded-lg border-2 border-[#288132] bg-[#F6FBF8] p-2 sm:p-3 md:p-4">
                       <div className="flex items-start">
-                        <Lock className="mr-3 mt-1 size-5 text-[#288132]" />
+                        <Lock className="mr-2 mt-1 size-4 text-[#288132] sm:mr-3 sm:size-5" />
                         <div>
-                          <h3 className="mb-1 font-semibold text-[#3f301d]">
+                          <h3 className="mb-0.5 text-sm font-semibold text-[#3f301d] sm:mb-1 sm:text-base">
                             Secure, reliable, and scalable infrastructure
                           </h3>
-                          <p className="text-sm text-[#27292A]">
+                          <p className="text-xs text-[#27292A] sm:text-sm">
                             Built on enterprise-grade technology to ensure high
                             availability and performance.
                           </p>

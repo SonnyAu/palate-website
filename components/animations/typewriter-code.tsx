@@ -9,15 +9,17 @@ interface TypewriterCodeProps {
   typingSpeed?: number
   className?: string
   showLineNumbers?: boolean
+  loop?: boolean
+  pauseBetweenLoops?: number
 }
 
 export function TypewriterCode({
   code = `fetch("https://api.example.com/v1/restaurants", {
-method: "GET",
-headers: {
-  "Authorization": "Bearer YOUR_API_KEY",
-  "Content-Type": "application/json"
-}
+  method: "GET",
+  headers: {
+    "Authorization": "Bearer YOUR_API_KEY",
+    "Content-Type": "application/json"
+  }
 })
 .then(response => response.json())
 .then(data => console.log(data));`,
@@ -25,6 +27,8 @@ headers: {
   typingSpeed = 30, // ms per character
   className = "",
   showLineNumbers = false,
+  loop = false,
+  pauseBetweenLoops = 3000, // ms to pause before restarting the loop
 }: TypewriterCodeProps) {
   const [displayedCode, setDisplayedCode] = useState("")
   const [isTyping, setIsTyping] = useState(true)
@@ -32,6 +36,8 @@ headers: {
   const containerRef = useRef<HTMLDivElement>(null)
   const isInView = useInView(containerRef, { once: true, amount: 0.3 })
   const prefersReducedMotion = useReducedMotion()
+  const [loopCount, setLoopCount] = useState(0)
+  const [isPaused, setIsPaused] = useState(false)
 
   // Calculate the maximum line length for width determination
   const maxLineLength = code
@@ -98,6 +104,9 @@ headers: {
       setDisplayedCode("")
     }
 
+    // If paused between loops, don't type
+    if (isPaused) return
+
     // Type out the code character by character
     if (currentIndex < code.length && isTyping) {
       const timeout = setTimeout(() => {
@@ -107,7 +116,28 @@ headers: {
 
       return () => clearTimeout(timeout)
     } else if (currentIndex >= code.length) {
+      // Finished typing
       setIsTyping(false)
+
+      // If looping is enabled, reset after pause
+      if (loop) {
+        const pauseTimeout = setTimeout(() => {
+          setIsPaused(true)
+          setLoopCount((prev) => prev + 1)
+
+          // After pause, reset and start typing again
+          const resetTimeout = setTimeout(() => {
+            setCurrentIndex(0)
+            setDisplayedCode("")
+            setIsTyping(true)
+            setIsPaused(false)
+          }, pauseBetweenLoops)
+
+          return () => clearTimeout(resetTimeout)
+        }, 1000) // Short pause before clearing
+
+        return () => clearTimeout(pauseTimeout)
+      }
     }
   }, [
     code,
@@ -116,6 +146,9 @@ headers: {
     typingSpeed,
     isInView,
     prefersReducedMotion,
+    loop,
+    pauseBetweenLoops,
+    isPaused,
   ])
 
   // Generate line numbers if needed
@@ -134,14 +167,17 @@ headers: {
   return (
     <div
       ref={containerRef}
-      className={`hover:shadow-2xl/80 rounded-lg bg-[#27292A] p-6 font-mono text-sm shadow-2xl transition-shadow duration-300 ${className}`}
+      className={`hover:shadow-2xl/80 rounded-lg bg-[#27292A] p-4 font-mono text-xs shadow-2xl transition-shadow duration-300 sm:p-6 sm:text-sm ${className}`}
       style={{ width: "fit-content", maxWidth: "100%" }}
     >
       <div className="flex">
         {showLineNumbers && (
           <div className="flex shrink-0 flex-col">{lineNumbers}</div>
         )}
-        <div className="overflow-x-auto" style={{ width: `${codeWidth}ch` }}>
+        <div
+          className="overflow-x-auto"
+          style={{ width: `${codeWidth}ch`, maxWidth: "100%" }}
+        >
           <pre className="whitespace-pre text-white" style={{ width: "100%" }}>
             <code
               dangerouslySetInnerHTML={{ __html: formatCode(displayedCode) }}
