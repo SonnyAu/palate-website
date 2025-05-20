@@ -20,12 +20,15 @@ export function HorizontalScrollContainer({
   const [reachedBeginning, setReachedBeginning] = useState(true)
   const isMobile = useMobile()
 
-  // Use refs for tracking scroll state to avoid re-renders
-  const lastScrollY = useRef(0)
+  // Refs for tracking scroll state to avoid re-renders
+  const lastScrollY = useRef(window.scrollY)
   const scrollingUp = useRef(false)
   const scrollingDown = useRef(false)
   const isAtEndRef = useRef(false)
   const isAtBeginningRef = useRef(true)
+  const isScrollingHorizontally = useRef(false)
+  const lastHorizontalScrollTime = useRef(0)
+  const unlockTimeout = useRef<NodeJS.Timeout | null>(null)
 
   // Scroll velocity tracking
   const scrollVelocity = useRef(0)
@@ -33,22 +36,27 @@ export function HorizontalScrollContainer({
   const scrollTimestamps = useRef<number[]>([])
   const scrollPositions = useRef<number[]>([])
 
-  // Activation threshold tracking
-  const wasNearActivationThreshold = useRef(false)
-  const activationTimeoutId = useRef<NodeJS.Timeout | null>(null)
+  // Progress tracking for forced scroll (unused after snapping removal)
+  const horizontalProgress = useRef(0)
+  const isForceScrolling = useRef(false)
+  const forceScrollDirection = useRef<"forward" | "backward" | null>(null)
 
-  // Check if we've reached the end or beginning of horizontal scrolling
+  // Check the horizontal scroll position and update edge flags
   const checkScrollPosition = useCallback(() => {
     if (!containerRef.current) return
 
     const container = containerRef.current
     const maxScroll = container.scrollWidth - container.clientWidth
 
-    // Use a smaller threshold for more precise detection
-    const isAtEnd = Math.abs(maxScroll - container.scrollLeft) < 2
-    const isAtBeginning = container.scrollLeft <= 2
+    horizontalProgress.current = Math.max(
+      0,
+      Math.min(1, container.scrollLeft / maxScroll)
+    )
 
-    // Only update state if values have changed to prevent unnecessary re-renders
+    // Use a relaxed threshold (10px) to detect edges
+    const isAtEnd = Math.abs(maxScroll - container.scrollLeft) < 10
+    const isAtBeginning = container.scrollLeft < 10
+
     if (isAtEnd !== isAtEndRef.current) {
       isAtEndRef.current = isAtEnd
       setReachedEnd(isAtEnd)
@@ -58,66 +66,96 @@ export function HorizontalScrollContainer({
       isAtBeginningRef.current = isAtBeginning
       setReachedBeginning(isAtBeginning)
     }
+
+    lastHorizontalScrollTime.current = Date.now()
+    isScrollingHorizontally.current = true
+
+    setTimeout(() => {
+      if (Date.now() - lastHorizontalScrollTime.current > 200) {
+        isScrollingHorizontally.current = false
+      }
+    }, 200)
   }, [])
+
+  // Smooth scrolling remains available if needed but is not auto-triggered
+  const smoothScrollTo = useCallback(
+    (targetScroll: number, duration = 300) => {
+      if (!containerRef.current) return
+
+      const container = containerRef.current
+      const startScroll = container.scrollLeft
+      const distance = targetScroll - startScroll
+      const startTime = performance.now()
+
+      isForceScrolling.current = true
+
+      const animateScroll = (currentTime: number) => {
+        const elapsedTime = currentTime - startTime
+
+        if (elapsedTime >= duration) {
+          container.scrollLeft = targetScroll
+          isForceScrolling.current = false
+          checkScrollPosition()
+          return
+        }
+
+        const progress = elapsedTime / duration
+        const easeProgress =
+          progress < 0.5
+            ? 2 * progress * progress
+            : 1 - Math.pow(-2 * progress + 2, 2) / 2
+
+        container.scrollLeft = startScroll + distance * easeProgress
+        requestAnimationFrame(animateScroll)
+      }
+
+      requestAnimationFrame(animateScroll)
+    },
+    [checkScrollPosition]
+  )
 
   // Handle wheel events to convert vertical scroll to horizontal
   const handleWheel = useCallback(
     (event: WheelEvent) => {
       if (!containerRef.current || !isActive) return
 
-      // More aggressive end detection - only allow escape when truly at the end
-      if (isAtEndRef.current && event.deltaY > 0) {
-        // Add a small buffer to prevent accidental escapes
-        const container = containerRef.current
-        const maxScroll = container.scrollWidth - container.clientWidth
-        const isReallyAtEnd = Math.abs(maxScroll - container.scrollLeft) < 1
-
-        if (isReallyAtEnd) {
-          setIsActive(false)
-          return
-        }
+      // If at an edge and scrolling further in that direction, simply disable horizontal mode
+      if (
+        (isAtEndRef.current && event.deltaY > 0) ||
+        (isAtBeginningRef.current && event.deltaY < 0)
+      ) {
+        setIsActive(false)
+        return
       }
 
-      // More aggressive beginning detection
-      if (isAtBeginningRef.current && event.deltaY < 0) {
-        // Add a smaller buffer to prevent accidental escapes
-        const isReallyAtBeginning = containerRef.current.scrollLeft <= 1
-
-        if (isReallyAtBeginning) {
-          return
-        }
-      }
-
-      // Prevent default scroll behavior
       event.preventDefault()
 
-      // Apply Apple-like damping and slower scrolling
-      // Increase the multiplier for faster response
-      const baseMultiplier = 0.8 // Increased for more responsive scrolling
+      const container = containerRef.current
+      const maxScroll = container.scrollWidth - container.clientWidth
+      const baseMultiplier = 0.8
 
-      // Apply some damping based on scroll speed
       let damping = 1.0
-      if (Math.abs(event.deltaY) > 60) {
-        // For fast scrolls, add more resistance
-        damping = 0.8
-      } else if (Math.abs(event.deltaY) < 20) {
-        // For slow, precise scrolls, be more responsive
-        damping = 1.3
+      if (Math.abs(event.deltaY) > 50) {
+        damping = 0.65
+      } else if (Math.abs(event.deltaY) < 15) {
+        damping = 1.2
       }
 
-      // Calculate the final scroll amount
       const scrollAmount = event.deltaY * baseMultiplier * damping
+      container.scrollLeft += scrollAmount
 
-      // Apply the scroll
-      containerRef.current.scrollLeft += scrollAmount
+      if (container.scrollLeft < 10) {
+        container.scrollLeft = 0
+      } else if (container.scrollLeft > maxScroll - 10) {
+        container.scrollLeft = maxScroll
+      }
 
-      // Check scroll position after scrolling
       checkScrollPosition()
     },
     [isActive, checkScrollPosition]
   )
 
-  // Handle touch events for mobile
+  // Handle touch events for mobile scrolling
   const handleTouchStart = useCallback(
     (event: TouchEvent) => {
       if (!containerRef.current || !isActive) return
@@ -149,30 +187,25 @@ export function HorizontalScrollContainer({
       const deltaX = touchStartX - currentX
       const deltaY = touchStartY - currentY
 
-      // If horizontal movement is greater, let browser handle it
       if (Math.abs(deltaX) > Math.abs(deltaY)) return
 
-      // Allow normal scrolling at boundaries
-      if (
-        (isAtBeginningRef.current && deltaY < 0) ||
-        (isAtEndRef.current && deltaY > 0)
-      ) {
-        if (isAtEndRef.current && deltaY > 0) {
-          setIsActive(false)
-        }
+      if (isAtEndRef.current && deltaY > 0) {
+        setIsActive(false)
         return
       }
 
-      // Prevent default and scroll horizontally
+      if (isAtBeginningRef.current && deltaY < 0) {
+        setIsActive(false)
+        return
+      }
+
       event.preventDefault()
 
-      // Apply Apple-like damping for touch
-      const baseMultiplier = 0.5 // Slower for touch
+      const baseMultiplier = 0.6
       const scrollAmount = deltaY * baseMultiplier
 
       container.scrollLeft += scrollAmount
 
-      // Update touch positions
       container.dataset.touchStartX = currentX.toString()
       container.dataset.touchStartY = currentY.toString()
 
@@ -181,22 +214,19 @@ export function HorizontalScrollContainer({
     [isActive, checkScrollPosition]
   )
 
-  // Calculate scroll velocity
+  // Calculate scroll velocity (for future use)
   const updateScrollVelocity = useCallback(() => {
     const now = Date.now()
     const currentScrollY = window.scrollY
 
-    // Add current timestamp and position to arrays
     scrollTimestamps.current.push(now)
     scrollPositions.current.push(currentScrollY)
 
-    // Keep only the last 3 entries for velocity calculation (reduced from 5 for faster response)
-    if (scrollTimestamps.current.length > 3) {
+    if (scrollTimestamps.current.length > 4) {
       scrollTimestamps.current.shift()
       scrollPositions.current.shift()
     }
 
-    // Calculate velocity if we have at least 2 points
     if (scrollTimestamps.current.length >= 2) {
       const oldestIndex = 0
       const newestIndex = scrollTimestamps.current.length - 1
@@ -209,160 +239,97 @@ export function HorizontalScrollContainer({
         scrollPositions.current[oldestIndex]
 
       if (timeDiff > 0) {
-        // Velocity in pixels per millisecond
-        scrollVelocity.current = Math.abs(posDiff / timeDiff) * 1.5 // Amplify velocity for better detection
+        scrollVelocity.current = Math.abs(posDiff / timeDiff) * 2.0
       }
     }
 
     lastScrollTime.current = now
   }, [])
 
-  // Check if container is in view and should be active
+  // Always allow vertical scroll
+  const preventVerticalScroll = useCallback(() => false, [])
+
+  // Activate horizontal mode based solely on visibility.
+  // When scrolling quickly, use a slightly lower threshold.
+  // Added hysteresis so that once active it remains active until a lower threshold is reached.
   const checkVisibility = useCallback(() => {
     if (!containerRef.current) return
 
     const rect = containerRef.current.getBoundingClientRect()
     const viewportHeight = window.innerHeight
+    if (isForceScrolling.current) return
 
-    // Calculate how much of the container is in the viewport
     const visibleHeight =
       Math.min(rect.bottom, viewportHeight) - Math.max(rect.top, 0)
     const visibleRatio = visibleHeight / rect.height
 
-    // More strict activation threshold - only activate when container is ~90% in view
-    const isSignificantlyVisible =
-      visibleRatio > 0.9 && rect.top < viewportHeight * 0.1
+    const activationThreshold = scrollVelocity.current > 0.5 ? 0.85 : 0.9
+    const deactivationThreshold = scrollVelocity.current > 0.5 ? 0.8 : 0.85
 
-    // Less aggressive threshold for fast scrolling - still require substantial visibility
-    const isNearThreshold =
-      visibleRatio > 0.7 && rect.top < viewportHeight * 0.3
-
-    // Store current activation state to check if it changes
-    const wasActive = isActive
-
-    // More sensitive fast scrolling detection
-    const isFastScrolling = scrollVelocity.current > 0.3 // Lower threshold to catch more fast scrolls
-
-    // Clear any existing activation timeout
-    if (activationTimeoutId.current) {
-      clearTimeout(activationTimeoutId.current)
-      activationTimeoutId.current = null
-    }
-
-    // Handle normal activation
-    if (isSignificantlyVisible && !wasActive) {
+    if (visibleRatio >= activationThreshold && !isActive) {
       setIsActive(true)
-
-      // When scrolling up and container is at the end, reset scroll position
-      if (scrollingUp.current && containerRef.current && isAtEndRef.current) {
-        containerRef.current.scrollLeft =
-          containerRef.current.scrollWidth - containerRef.current.clientWidth
-      }
-    }
-    // Handle fast scrolling - set a brief timeout to catch the container
-    else if (isNearThreshold && !wasActive && isFastScrolling) {
-      // Set a flag that we were near the threshold
-      wasNearActivationThreshold.current = true
-
-      // Set a timeout to activate the container if we're still near the threshold
-      activationTimeoutId.current = setTimeout(() => {
-        if (wasNearActivationThreshold.current) {
-          // Force the container to be active for fast scrolling
-          setIsActive(true)
-
-          // Scroll to the beginning if scrolling down, or end if scrolling up
-          if (containerRef.current) {
-            if (scrollingDown.current) {
-              containerRef.current.scrollLeft = 0
-              setReachedBeginning(true)
-              isAtBeginningRef.current = true
-            } else if (scrollingUp.current) {
-              containerRef.current.scrollLeft =
-                containerRef.current.scrollWidth -
-                containerRef.current.clientWidth
-              setReachedEnd(true)
-              isAtEndRef.current = true
-            }
-          }
-
-          // Reset the flag
-          wasNearActivationThreshold.current = false
-        }
-      }, 30) // Shorter timeout to catch fast scrolling more reliably
-    }
-    // Reset the near threshold flag if we're not near the threshold
-    else if (!isNearThreshold) {
-      wasNearActivationThreshold.current = false
-    }
-
-    // More aggressive deactivation logic - only deactivate when truly out of view or at the end
-    if (
-      (!isSignificantlyVisible && wasActive && !isAtEndRef.current) ||
-      rect.top > viewportHeight * 0.9 ||
-      rect.bottom < viewportHeight * 0.1
-    ) {
+    } else if (visibleRatio < deactivationThreshold && isActive) {
       setIsActive(false)
     }
   }, [isActive])
 
-  // Global scroll handler to detect scroll direction and position
+  // Global scroll handler to update scroll direction, slow vertical scrolling, and check visibility
   const handleGlobalScroll = useCallback(() => {
     const currentScrollY = window.scrollY
 
-    // More aggressive scroll direction detection
+    if (isForceScrolling.current) return
+
+    if (isScrollingHorizontally.current && isActive) {
+      if (
+        (isAtEndRef.current && scrollingDown.current) ||
+        (isAtBeginningRef.current && scrollingUp.current)
+      ) {
+        // Do nothing
+      } else {
+        if (preventVerticalScroll()) return
+      }
+    }
+
     scrollingUp.current = currentScrollY < lastScrollY.current
     scrollingDown.current = currentScrollY > lastScrollY.current
 
-    // Calculate instantaneous velocity for better fast scroll detection
     const now = Date.now()
     const timeDelta = now - lastScrollTime.current
     if (timeDelta > 0) {
       const instantVelocity =
         Math.abs(currentScrollY - lastScrollY.current) / timeDelta
-
-      // Use a weighted average for smoother velocity tracking
       scrollVelocity.current =
-        scrollVelocity.current * 0.7 + instantVelocity * 0.3
+        scrollVelocity.current * 0.6 + instantVelocity * 0.4
     }
 
-    // Update scroll velocity with the traditional method too
     updateScrollVelocity()
 
-    // Store current position for next comparison
+    // Just update the reference without modifying scroll behavior
     lastScrollY.current = currentScrollY
     lastScrollTime.current = now
 
-    // Check if container should be active
     checkVisibility()
-  }, [checkVisibility, updateScrollVelocity])
+  }, [checkVisibility, updateScrollVelocity, preventVerticalScroll])
 
-  // Set up scroll event listeners
   useEffect(() => {
     window.addEventListener("scroll", handleGlobalScroll, { passive: true })
     window.addEventListener("resize", checkVisibility, { passive: true })
 
-    // Initial check
     lastScrollY.current = window.scrollY
-    checkVisibility()
+    setTimeout(checkVisibility, 100)
 
     return () => {
       window.removeEventListener("scroll", handleGlobalScroll)
       window.removeEventListener("resize", checkVisibility)
-
-      // Clear any pending timeout
-      if (activationTimeoutId.current) {
-        clearTimeout(activationTimeoutId.current)
-      }
+      if (unlockTimeout.current) clearTimeout(unlockTimeout.current)
     }
   }, [handleGlobalScroll, checkVisibility])
 
-  // Set up container-specific event listeners
   useEffect(() => {
     const container = containerRef.current
     if (!container) return
 
     if (isActive) {
-      // Add event listeners with non-passive wheel to allow preventDefault
       container.addEventListener("wheel", handleWheel, { passive: false })
       container.addEventListener("touchstart", handleTouchStart, {
         passive: true,
@@ -374,8 +341,10 @@ export function HorizontalScrollContainer({
         passive: true,
       })
 
-      // Initial position check
       checkScrollPosition()
+      document.body.classList.add("horizontal-scroll-active")
+    } else {
+      document.body.classList.remove("horizontal-scroll-active")
     }
 
     return () => {
@@ -385,6 +354,7 @@ export function HorizontalScrollContainer({
         container.removeEventListener("touchmove", handleTouchMove)
         container.removeEventListener("scroll", checkScrollPosition)
       }
+      document.body.classList.remove("horizontal-scroll-active")
     }
   }, [
     isActive,
@@ -398,9 +368,10 @@ export function HorizontalScrollContainer({
     <motion.div
       ref={containerRef}
       className={`horizontal-scroll-container ${className} ${isActive ? "active" : ""}`}
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ once: true }}
+      initial={{ opacity: 0.9, scale: 0.98 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+      viewport={{ once: true, margin: "-10%" }}
     >
       {children}
     </motion.div>

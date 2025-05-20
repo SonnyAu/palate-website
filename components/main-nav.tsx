@@ -292,12 +292,15 @@ export function MainNav() {
 
             {/* Desktop buttons - only show on large screens */}
             <div className="hidden items-center space-x-3 xl:flex">
-              <span
-                className="inline-flex cursor-default items-center justify-center whitespace-nowrap rounded-md bg-[#288132] px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-[#288132]/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#288132] focus-visible:ring-offset-2 xl:px-5 xl:text-base"
-                aria-label="PalAte app coming soon"
+              <a
+                href="https://apps.apple.com/us/app/palate-app/id6736512582"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center whitespace-nowrap rounded-md bg-[#288132] px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-[#288132]/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#288132] focus-visible:ring-offset-2 xl:px-5 xl:text-base"
+                aria-label="Download PalAte app from App Store"
               >
-                Coming Soon
-              </span>
+                Download App
+              </a>
               <Link
                 href="/contact"
                 className="inline-flex items-center justify-center whitespace-nowrap rounded-md border border-[#288132] bg-transparent px-4 py-2 text-sm font-medium text-[#288132] shadow-sm transition-colors hover:bg-[#288132]/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#288132] focus-visible:ring-offset-2 xl:px-5 xl:text-base"
@@ -374,12 +377,15 @@ export function MainNav() {
                 </nav>
 
                 <div className="mt-auto space-y-3 pt-4">
-                  <span
-                    className="flex w-full cursor-default items-center justify-center rounded-md bg-[#288132] px-4 py-2.5 text-base font-medium text-white shadow-sm transition-colors hover:bg-[#288132]/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#288132] focus-visible:ring-offset-2"
-                    aria-label="PalAte app coming soon"
+                  <a
+                    href="https://apps.apple.com/us/app/palate-app/id6736512582"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex w-full items-center justify-center rounded-md bg-[#288132] px-4 py-2.5 text-base font-medium text-white shadow-sm transition-colors hover:bg-[#288132]/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#288132] focus-visible:ring-offset-2"
+                    aria-label="Download PalAte app from App Store"
                   >
-                    Coming Soon
-                  </span>
+                    Download App
+                  </a>
                   <Link
                     href="/contact"
                     className="flex w-full items-center justify-center rounded-md border border-[#288132] bg-transparent px-4 py-2.5 text-base font-medium text-[#288132] shadow-sm transition-colors hover:bg-[#288132]/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#288132] focus-visible:ring-offset-2"

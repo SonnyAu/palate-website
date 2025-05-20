@@ -24,7 +24,6 @@ import { TypewriterCode } from "@/components/animations/typewriter-code"
 import { WavyGradientBackground } from "@/components/animations/wavy-gradient-background"
 import { MainNav } from "@/components/main-nav"
 import { ScrollTransitionSection } from "@/components/scroll-transition-section"
-import { Input } from "@/components/ui/input"
 
 export default function Home() {
   const handleNavClick = (
@@ -97,16 +96,21 @@ export default function Home() {
                 <div className="mt-6 flex justify-center sm:justify-start">
                   <div className="flex flex-col items-center">
                     <MotionButton
-                      className="cursor-default rounded-xl bg-[#288132] px-8 py-6 text-white shadow-lg transition-all duration-300 hover:scale-105 hover:bg-[#288132]/90 hover:shadow-xl"
+                      className="rounded-xl bg-[#288132] px-8 py-6 text-white shadow-lg transition-all duration-300 hover:scale-105 hover:bg-[#288132]/90"
                       delay={0.2}
                     >
-                      <span className="flex items-center justify-center gap-3 text-xl font-bold sm:text-2xl">
-                        App Launching Soon
+                      <a
+                        href="https://apps.apple.com/us/app/palate-app/id6736512582"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-center gap-3 text-xl font-bold text-white sm:text-2xl"
+                      >
+                        Download on App Store
                         <ArrowRight className="size-6" />
-                      </span>
+                      </a>
                     </MotionButton>
                     <span className="mt-2 text-sm text-[#27292A]">
-                      Available soon on iOS
+                      Available now on iOS
                     </span>
                   </div>
                 </div>
@@ -362,7 +366,7 @@ export default function Home() {
             duration={26}
           />
           <div className="container relative px-4 md:px-6">
-            <div className="grid gap-6 lg:grid-cols-2 lg:gap-12">
+            <div className="api-section-grid grid gap-6 lg:grid-cols-2 lg:gap-12">
               <MotionSection
                 delay={0.2}
                 className="flex items-center justify-center"
@@ -371,7 +375,7 @@ export default function Home() {
                   code={apiCodeExample}
                   typingSpeed={25}
                   showLineNumbers={true}
-                  loop={true}
+                  loop={false}
                 />
               </MotionSection>
               <MotionSection>
@@ -439,10 +443,17 @@ export default function Home() {
 
                   <div className="flex flex-col items-center sm:items-start">
                     <MotionButton
-                      className="cursor-default bg-[#288132] text-white hover:bg-[#288132]/90"
+                      className="bg-[#288132] text-white hover:bg-[#288132]/90"
                       delay={0.3}
+                      asChild
                     >
-                      API Access Coming Soon
+                      <a
+                        href="https://apps.apple.com/us/app/palate-app/id6736512582"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Download the App
+                      </a>
                     </MotionButton>
                     <span className="mt-1 text-xs text-[#27292A]">
                       Developer documentation in development
@@ -488,31 +499,18 @@ export default function Home() {
                 </div>
               </MotionSection>
               <MotionSection delay={0.2} className="w-full max-w-sm space-y-2">
-                <div className="flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
-                  <Input
-                    type="email"
-                    placeholder="Enter your email for launch updates"
-                    className="max-w-lg flex-1 border-[#288132]"
-                  />
-                  <MotionButton className="cursor-default bg-[#288132] text-white hover:bg-[#288132]/90">
-                    Join Waitlist
-                  </MotionButton>
-                </div>
-                <p className="text-xs text-[#27292A]">
-                  By signing up, you agree to our{" "}
-                  <Link
-                    href="/privacy"
-                    className="text-[#288132] underline underline-offset-2"
-                  >
-                    Privacy Policy
-                  </Link>
-                </p>
+                <div></div>
               </MotionSection>
               <MotionSection
                 delay={0.3}
                 className="flex flex-col items-center pt-4"
               >
-                <div className="inline-flex h-12 cursor-default items-center justify-center rounded-md bg-black px-10 text-base font-medium text-white shadow transition-colors hover:bg-black/90">
+                <a
+                  href="https://apps.apple.com/us/app/palate-app/id6736512582"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex h-12 items-center justify-center rounded-md bg-black px-10 text-base font-medium text-white shadow transition-colors hover:bg-black/90"
+                >
                   <svg
                     viewBox="0 0 24 24"
                     className="mr-2 size-6"
@@ -520,10 +518,10 @@ export default function Home() {
                   >
                     <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.21 2.33-.91 3.57-.84 1.5.12 2.63.64 3.4 1.8-3.03 1.81-2.52 5.68.22 7.14-.62 1.64-1.42 3.27-2.27 4.07ZM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.26 2.01-1.76 4.04-3.74 4.25Z" />
                   </svg>
-                  Coming Soon on the App Store
-                </div>
+                  Download on the App Store
+                </a>
                 <span className="mt-2 text-sm text-[#27292A]">
-                  Sign up above to be notified at launch
+                  Available now for iOS devices
                 </span>
               </MotionSection>
             </div>
