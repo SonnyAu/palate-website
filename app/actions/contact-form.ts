@@ -153,8 +153,8 @@ export async function submitContactForm(
     const resend = new Resend(process.env.RESEND_API_KEY!);
 
     await resend.emails.send({
-      from: process.env.CONTACT_FROM_EMAIL,
-      to: process.env.CONTACT_TO_EMAIL,
+      from: process.env.CONTACT_FROM_EMAIL!,
+      to: process.env.CONTACT_TO_EMAIL!,
       reply_to: validatedData.email,
       subject: `[Contact] ${validatedData.subject}`,
       text: `From: ${validatedData.name} <${validatedData.email}>\n\n${validatedData.message}`,
