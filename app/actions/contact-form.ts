@@ -155,7 +155,7 @@ export async function submitContactForm(
     await resend.emails.send({
       from: process.env.CONTACT_FROM_EMAIL,
       to: process.env.CONTACT_TO_EMAIL,
-      reply_to: validatedData.email,
+      replyTo: validatedData.email,
       subject: `[Contact] ${validatedData.subject}`,
       text: `From: ${validatedData.name} <${validatedData.email}>\n\n${validatedData.message}`,
     });
