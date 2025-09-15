@@ -3,6 +3,7 @@
 import { z } from "zod"
 import { cookies } from "next/headers"
 import { revalidatePath } from "next/cache"
+import { Resend } from "resend"
 
 // Define the form schema using Zod for validation
 const contactFormSchema = z.object({
@@ -148,8 +149,17 @@ export async function submitContactForm(
     // Simulate server processing delay
     await new Promise((resolve) => setTimeout(resolve, 1000))
 
-    // In a real application, you would send an email, store in a database, etc.
-    // For now, we'll just simulate a successful submission
+   // In a real application, you would send an email, store in a database, etc.
+    const resend = new Resend(process.env.RESEND_API_KEY!);
+
+    await resend.emails.send({
+      from: process.env.CONTACT_FROM_EMAIL!,
+      to: process.env.CONTACT_TO_EMAIL!,
+      replyTo: validatedData.email,
+      subject: `[Contact] ${validatedData.subject}`,
+      text: `From: ${validatedData.name} <${validatedData.email}>\n\n${validatedData.message}`,
+    });
+
 
     // Uncomment to simulate a random server error for testing
     // if (Math.random() > 0.7) {
