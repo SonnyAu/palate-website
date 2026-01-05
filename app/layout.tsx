@@ -4,6 +4,7 @@ import { Inter } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Toaster } from "@/components/ui/toaster"
+import RB2BLoader from "@/components/rb2b-loader"
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" })
 
@@ -19,22 +20,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `!function(key) {
-if (window.reb2b) return;
-window.reb2b = {loaded: true};
-var s = document.createElement("script");
-s.async = true;
-s.src = "https://ddwl4m2hdecbv.cloudfront.net/b/" + key + "/" + key + ".js.gz";
-document.getElementsByTagName("script")[0].parentNode.insertBefore(s, document.getElementsByTagName("script")[0]);
-}("QO92DHLLM9N7");`,
-          }}
-        />
-      </head>
       <body className={`${inter.variable} font-sans`}>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+          <RB2BLoader />
           {children}
           <Toaster />
         </ThemeProvider>
